@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Filters\ProductFilter;
+use App\Http\Resources\ProductResourceCollection;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\MultiImg;
@@ -15,6 +17,32 @@ use Image;
 
 class ProductController extends Controller
 {
+
+    /**
+     * @OA\Get(path="/api/products",
+     *   tags={"Products"},
+     *   summary="Returns products as json",
+     *   description="Returns products",
+     *   operationId="getProducts",
+     *   parameters={},
+     *   @OA\Response(
+     *     response=200,
+     *     description="successful operation",
+     *     @OA\Schema(
+     *       additionalProperties={
+     *         "type":"integer",
+     *         "format":"int32"
+     *       }
+     *     )
+     *   )
+     * )
+     */
+    public function index(ProductFilter $filters)
+    {
+        [$entries, $count, $sum] = Product::filter($filters);
+        $entries = $entries->get();
+        return response(new ProductResourceCollection(['data' => $entries, 'count' => $count]));
+    }
 
     public function AddProduct()
     {
