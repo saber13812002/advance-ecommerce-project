@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthenticationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,9 +15,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
 
 // Products
 Route::prefix('products')->group(function () {
@@ -49,14 +47,29 @@ Route::prefix('categories')->group(function () {
     Route::get('/{id}', [\App\Http\Controllers\Backend\CategoryController::class, 'show'])->name('category.show');
 });
 
-Route::prefix('users')->group(function () {
-    Route::prefix('reviews')->group(function () {
-        Route::get('/', [\App\Http\Controllers\User\ReviewController::class, 'productPublishedReview'])->name('reviews.me');
+Route::middleware('auth:sanctum')->group(function () {
 
+    Route::prefix('users')->group(function () {
+
+        Route::prefix('reviews')->group(function () {
+            Route::get('/', [\App\Http\Controllers\User\ReviewController::class, 'productPublishedReview'])->name('reviews.me');
+        });
+
+        Route::get('/profile/me', [AuthenticationController::class, 'myProfile']);
+
+        Route::post('/sign-out', [AuthenticationController::class, 'signOut']);
+
+        Route::post('/tokens/create', [AuthenticationController::class, 'tokensCreate']);
     });
-//    Route::post('/tokens/create', function (Request $request) {
-//        $token = $request->user()->createToken($request->token_name);
-//
-//        return ['token' => $token->plainTextToken];
-//    });
 });
+
+
+Route::post('/login/email', [AuthenticationController::class, 'loginEmail']);
+//register new user
+Route::post('/create-account', [AuthenticationController::class, 'createAccount']);
+//login user
+Route::post('/sign-in', [AuthenticationController::class, 'signIn']);
+
+
+
+
