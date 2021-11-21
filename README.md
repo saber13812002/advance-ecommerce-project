@@ -1,6 +1,40 @@
+## About This Project
 
-## About This project
+This project use Laravel. 
 
+## Steps:
+
+ - clone this project
+ - install composer
+ - run compose install
+ - create db for this project e.g advance_ecommerce_db_01
+ - clone .env file with this command : cp .env.example .env
+ - modify .env file with proper connection string and credentials
+
+
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=advance_ecommerce_db_01
+DB_USERNAME=root
+DB_PASSWORD=1234567890
+
+ - run php artisan migrate --seed
+
+or   
+
+ - restore db_backup.sql on your mysql db from /database folder
+
+
+login in localhost:8000/login
+
+user: saber@admin.com
+pass: 1234567890
+
+then login in admin panel with localhost:8000/admin/login
+
+user:admin@admin.com
+pass:1234567890
+=======
 install composer 
 
 run composer install
