@@ -5,7 +5,7 @@ pipeline{
         PROJECT_NAME = env.JOB_NAME.minus("/${env.JOB_BASE_NAME}").minus("${OWNER}/");
         LOG_OUTPUT_URL = "${BUILD_URL}display/redirect";
     }
-    
+
     stages{
         stage('deploy'){
             steps{
@@ -18,7 +18,7 @@ pipeline{
             }
         }
     }
-    
+
     post{
         success{
             mattermostSend color: 'good', message: "$LOG_OUTPUT_URL", text: "job #$BUILD_NUMBER $GIT_BRANCH@$PROJECT_NAME succeed"
