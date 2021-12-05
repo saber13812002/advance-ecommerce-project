@@ -135,7 +135,7 @@ class OrderController extends Controller
             'post_code' => $request->user_id,
             'notes' => $request->user_id,
         ];
-        $order_id = $this->orderRepositoriesImpl->store($data, $request->user_id, $request->total_amount, 'Payed', 'Behandam-Product-Service');
+        $order_id = $this->orderRepositoriesImpl->store($data, $request->user_id, $request->total_amount, $request->status, 'Behandam-Product-Service');
 
         $object = new OrderItem();
         $object->order_id = $order_id;
