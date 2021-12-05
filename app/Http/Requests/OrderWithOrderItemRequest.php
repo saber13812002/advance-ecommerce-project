@@ -13,7 +13,8 @@ use Behamin\BResources\Requests\BasicRequest;
  *      example={
  *           "product_id": 5,
  *           "user_id": 5,
- *           "total_amount": 50000
+ *           "total_amount": 50000,
+ *           "status": "pending|payed"
  *      }
  * )
  */
@@ -40,6 +41,7 @@ class OrderWithOrderItemRequest extends BasicRequest
             'product_id' => 'required',
             'user_id' => 'required',
             'total_amount' => 'required',
+            'status' => 'in:payed,pending',
         ];
     }
 }
