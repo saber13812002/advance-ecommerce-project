@@ -82,9 +82,9 @@ class IndexController extends Controller
 
         if ($request->file('profile_photo_path')) {
             $file = $request->file('profile_photo_path');
-            @unlink(public_path('upload/user_images/' . $data->profile_photo_path));
+            @unlink(public_path('storage/upload/user_images/' . $data->profile_photo_path));
             $filename = date('YmdHi') . $file->getClientOriginalName();
-            $file->move(public_path('upload/user_images'), $filename);
+            $file->move(public_path('storage/upload/user_images'), $filename);
             $data['profile_photo_path'] = $filename;
         }
         $data->save();
@@ -96,7 +96,7 @@ class IndexController extends Controller
 
         return redirect()->route('dashboard')->with($notification);
 
-    } // end method
+    }
 
 
     public function UserChangePassword()
@@ -218,7 +218,7 @@ class IndexController extends Controller
 
         ));
 
-    } // end method
+    }
 
     // Product Seach
     public function ProductSearch(Request $request)
@@ -232,7 +232,7 @@ class IndexController extends Controller
         $products = Product::where('product_name_en', 'LIKE', "%$item%")->get();
         return view('frontend.product.search', compact('products', 'categories'));
 
-    } // end method
+    }
 
 
     ///// Advance Search Options
@@ -248,7 +248,7 @@ class IndexController extends Controller
         return view('frontend.product.search_product', compact('products'));
 
 
-    } // end method
+    }
 
 
 }

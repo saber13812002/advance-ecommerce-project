@@ -14,12 +14,13 @@ class Category extends Model
     use HasFilter;
 
 
-    protected array $fillable = [
+    protected $fillable = [
         'category_name_en',
         'category_name_hin',
         'category_slug_en',
         'category_slug_hin',
         'category_icon',
+        'image',
     ];
 
 }

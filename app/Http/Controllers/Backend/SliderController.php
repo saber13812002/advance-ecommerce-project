@@ -3,12 +3,40 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Filters\SliderFilter;
+use App\Http\Resources\SliderResourceCollection;
 use App\Models\Slider;
 use Illuminate\Http\Request;
 use Image;
 
 class SliderController extends Controller
 {
+
+    /**
+     * @OA\Get(path="/api/sliders",
+     *   tags={"Sliders"},
+     *   summary="Returns sliders as json",
+     *   description="Returns sliders",
+     *   operationId="getSliders",
+     *   parameters={},
+     *   @OA\Response(
+     *     response=200,
+     *     description="successful operation",
+     *     @OA\Schema(
+     *       additionalProperties={
+     *         "type":"integer",
+     *         "format":"int32"
+     *       }
+     *     )
+     *   )
+     * )
+     */
+    public function index(SliderFilter $filters)
+    {
+        [$entries, $count, $sum] = Slider::filter($filters);
+        $entries = $entries->get();
+        return response(new SliderResourceCollection(['data' => $entries, 'count' => $count]));
+    }
 
     public function SliderView()
     {
@@ -30,12 +58,17 @@ class SliderController extends Controller
 
         $image = $request->file('slider_img');
         $name_gen = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
-        Image::make($image)->resize(870, 370)->save('upload/slider/' . $name_gen);
-        $save_url = 'upload/slider/' . $name_gen;
+        Image::make($image)->resize(870, 370)->save('storage/upload/slider/' . $name_gen);
+        $save_url = 'storage/upload/slider/' . $name_gen;
 
         Slider::insert([
             'title' => $request->title,
             'description' => $request->description,
+            'group_id' => $request->group_id,
+            'model_id' => $request->model_id,
+            'model_name' => $request->model_name,
+            'action_type' => $request->action_type,
+            'action' => $request->action,
             'slider_img' => $save_url,
 
         ]);
@@ -47,7 +80,7 @@ class SliderController extends Controller
 
         return redirect()->back()->with($notification);
 
-    } // end method
+    }
 
 
     public function SliderEdit($id)
@@ -69,8 +102,8 @@ class SliderController extends Controller
             }
             $image = $request->file('slider_img');
             $name_gen = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
-            Image::make($image)->resize(870, 370)->save('upload/slider/' . $name_gen);
-            $save_url = 'upload/slider/' . $name_gen;
+            Image::make($image)->resize(870, 370)->save('storage/upload/slider/' . $name_gen);
+            $save_url = 'storage/upload/slider/' . $name_gen;
 
             Slider::findOrFail($slider_id)->update([
                 'title' => $request->title,
@@ -83,8 +116,6 @@ class SliderController extends Controller
                 'message' => 'Slider Updated Successfully',
                 'alert-type' => 'info'
             );
-
-            return redirect()->route('manage-slider')->with($notification);
 
         } else {
 
@@ -100,17 +131,20 @@ class SliderController extends Controller
                 'alert-type' => 'info'
             );
 
-            return redirect()->route('manage-slider')->with($notification);
-
-        } // end else
-    } // end method
+        }// end else
+        return redirect()->route('manage-slider')->with($notification);
+    }
 
 
     public function SliderDelete($id)
     {
         $slider = Slider::findOrFail($id);
         $img = $slider->slider_img;
-        unlink($img);
+
+        if (file_exists($img)) {
+            unlink($img);
+        }
+
         Slider::findOrFail($id)->delete();
 
         $notification = array(
@@ -120,7 +154,7 @@ class SliderController extends Controller
 
         return redirect()->back()->with($notification);
 
-    } // end method
+    }
 
 
     public function SliderInactive($id)
@@ -134,7 +168,7 @@ class SliderController extends Controller
 
         return redirect()->back()->with($notification);
 
-    } // end method
+    }
 
 
     public function SliderActive($id)
@@ -148,7 +182,7 @@ class SliderController extends Controller
 
         return redirect()->back()->with($notification);
 
-    } // end method
+    }
 
 
 }

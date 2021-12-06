@@ -1,8 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthenticationController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +25,17 @@ Route::prefix('products')->group(function () {
 Route::prefix('orders')->group(function () {
     Route::get('/', [\App\Http\Controllers\Backend\OrderController::class, 'index'])->name('orders.index');
     Route::get('/{id}', [\App\Http\Controllers\Backend\OrderController::class, 'show'])->name('orders.show');
+    Route::post('/', [\App\Http\Controllers\Backend\OrderController::class, 'setOrderWithOrderItem'])->name('orders.post');
+});
+
+// Sliders
+Route::prefix('sliders')->group(function () {
+    Route::get('/', [\App\Http\Controllers\Backend\SliderController::class, 'index'])->name('sliders.index');
+});
+
+// Homepage Client
+Route::prefix('homepage')->group(function () {
+    Route::get('/', [\App\Http\Controllers\Backend\HomePageController::class, 'index'])->name('homepage.index');
 });
 
 // BlogPosts
@@ -47,6 +57,7 @@ Route::prefix('categories')->group(function () {
     Route::get('/{id}', [\App\Http\Controllers\Backend\CategoryController::class, 'show'])->name('category.show');
 });
 
+
 Route::middleware('auth:sanctum')->group(function () {
 
     Route::prefix('users')->group(function () {
@@ -57,19 +68,27 @@ Route::middleware('auth:sanctum')->group(function () {
 
         Route::get('/profile/me', [AuthenticationController::class, 'myProfile']);
 
-        Route::post('/sign-out', [AuthenticationController::class, 'signOut']);
+        Route::post('/logout', [AuthenticationController::class, 'logout']);
 
-        Route::post('/tokens/create', [AuthenticationController::class, 'tokensCreate']);
+        Route::post('/token/refresh', [AuthenticationController::class, 'refreshToken']);
     });
 });
 
 
-Route::post('/login/email', [AuthenticationController::class, 'loginEmail']);
+Route::prefix('users/{userId}')->group(function () {
+    // product that payed
+    Route::prefix('products/payed')->group(function () {
+        Route::get('/', [\App\Http\Controllers\Backend\UserController::class, 'payedProducts'])->name('users.payed.products');
+    });
+});
+
+Route::post('/login', [AuthenticationController::class, 'loginEmail']);
 //register new user
-Route::post('/create-account', [AuthenticationController::class, 'createAccount']);
+Route::post('/register', [AuthenticationController::class, 'register']);
 //login user
-Route::post('/sign-in', [AuthenticationController::class, 'signIn']);
+Route::post('/login', [AuthenticationController::class, 'login']);
 
 
-
-
+Route::prefix('test')->group(function () {
+    Route::get('/{videoLessonId}', [\App\Services\MediaHelper::class, 'getHashedMediaUrlByLessonId'])->name('test');
+});

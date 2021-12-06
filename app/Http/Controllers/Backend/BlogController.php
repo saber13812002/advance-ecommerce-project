@@ -113,7 +113,7 @@ class BlogController extends Controller
 
 		return redirect()->back()->with($notification);
 
-    } // end method
+    }
 
 
 
@@ -148,7 +148,7 @@ public function BlogCategoryUpdate(Request $request){
 
 		return redirect()->route('blog.category')->with($notification);
 
-    } // end method
+    }
 
 
 
@@ -183,8 +183,8 @@ public function BlogCategoryUpdate(Request $request){
 
     	$image = $request->file('post_image');
     	$name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
-    	Image::make($image)->resize(780,433)->save('upload/post/'.$name_gen);
-    	$save_url = 'upload/post/'.$name_gen;
+    	Image::make($image)->resize(780,433)->save('storage/upload/post/'.$name_gen);
+    	$save_url = 'storage/upload/post/'.$name_gen;
 
 	BlogPost::insert([
 		'category_id' => $request->category_id,
@@ -206,7 +206,7 @@ public function BlogCategoryUpdate(Request $request){
 
 		return redirect()->route('list.post')->with($notification);
 
-  } // end mehtod
+  }
 
 
 

@@ -98,8 +98,8 @@ class BrandController extends Controller
 
         $image = $request->file('brand_image');
         $name_gen = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
-        Image::make($image)->resize(300, 300)->save('upload/brand/' . $name_gen);
-        $save_url = 'upload/brand/' . $name_gen;
+        Image::make($image)->resize(300, 300)->save('storage/upload/brand/' . $name_gen);
+        $save_url = 'storage/upload/brand/' . $name_gen;
 
         Brand::insert([
             'brand_name_en' => $request->brand_name_en,
@@ -117,7 +117,7 @@ class BrandController extends Controller
 
         return redirect()->back()->with($notification);
 
-    } // end method
+    }
 
 
     public function BrandEdit($id)
@@ -135,13 +135,15 @@ class BrandController extends Controller
         $old_img = $request->old_image;
 
         if ($request->file('brand_image')) {
+
             if (file_exists($old_img)) {
                 unlink($old_img);
             }
+
             $image = $request->file('brand_image');
             $name_gen = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
-            Image::make($image)->resize(300, 300)->save('upload/brand/' . $name_gen);
-            $save_url = 'upload/brand/' . $name_gen;
+            Image::make($image)->resize(300, 300)->save('storage/upload/brand/' . $name_gen);
+            $save_url = 'storage/upload/brand/' . $name_gen;
 
             Brand::findOrFail($brand_id)->update([
                 'brand_name_en' => $request->brand_name_en,
@@ -178,7 +180,7 @@ class BrandController extends Controller
             return redirect()->route('all.brand')->with($notification);
 
         } // end else
-    } // end method
+    }
 
 
     public function BrandDelete($id)
@@ -186,7 +188,10 @@ class BrandController extends Controller
 
         $brand = Brand::findOrFail($id);
         $img = $brand->brand_image;
-        unlink($img);
+
+        if (file_exists($img)) {
+            unlink($img);
+        }
 
         Brand::findOrFail($id)->delete();
 
@@ -197,7 +202,7 @@ class BrandController extends Controller
 
         return redirect()->back()->with($notification);
 
-    } // end method
+    }
 
 
 }
