@@ -500,7 +500,7 @@
                 }
             }
         },
-        "/api/orders/{paymentId}": {
+        "/api/orders/payments/{paymentId}": {
             "patch": {
                 "tags": [
                     "Orders"
