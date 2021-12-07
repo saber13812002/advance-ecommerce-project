@@ -13,6 +13,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
 use DB;
+use Illuminate\Http\Request;
 use PDF;
 
 
@@ -86,6 +87,52 @@ class OrderController extends Controller
     public function show(int $id)
     {
         $entry = Order::query()->findOrFail($id);
+        return response(new OrderResource(['data' => $entry]));
+    }
+
+
+    /**
+     * @OA\Patch (path="/api/orders/{orderId}",
+     *   tags={"Orders"},
+     *   summary="patch order status by id",
+     *   description="patch order status by id",
+     *   operationId="patchOrderStatusById",
+     *
+     *  @OA\Parameter(
+     *       description="ID of order",
+     *       name="orderId",
+     *       required=true,
+     *       in="path",
+     *       example="1",
+     *       @OA\Schema(
+     *           type="integer",
+     *           format="int64"
+     *       )
+     *   ),
+     *
+     *     @OA\RequestBody(
+     *         description="set order by microservice without cart",
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/OrderWithOrderItemRequest")
+     *     ),
+     *
+     *   @OA\Response(
+     *     response=200,
+     *     description="successful operation",
+     *     @OA\Schema(
+     *       additionalProperties={
+     *         "type":"integer",
+     *         "format":"int32"
+     *       }
+     *     )
+     *   )
+     * )
+     */
+    public function patch(Request $request, int $id)
+    {
+        $entry = Order::query()->findOrFail($id);
+        $entry->status = $request->status;
+        $entry->save();
         return response(new OrderResource(['data' => $entry]));
     }
 
