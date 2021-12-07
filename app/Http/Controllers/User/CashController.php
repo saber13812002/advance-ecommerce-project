@@ -34,7 +34,7 @@ class CashController extends Controller
 
         // dd($charge);
 
-        $order_id = $this->orderRepositoriesImpl->store($request->all(), Auth::id(), $total_amount, null, null, null);
+        $order_id = $this->orderRepositoriesImpl->store($request->all(), Auth::id(), $total_amount);
 
         // Start Send Email
         $invoice = Order::findOrFail($order_id);
