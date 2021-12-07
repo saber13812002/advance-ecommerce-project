@@ -136,7 +136,7 @@ class OrderController extends Controller
         return response(new OrderResource(['data' => $entry]));
     }
     /**
-     * @OA\Patch (path="/api/orders/{paymentId}",
+     * @OA\Patch (path="/api/orders/payments/{paymentId}",
      *   tags={"Orders"},
      *   summary="patch order status by paymentId",
      *   description="patch order status by paymentId",
