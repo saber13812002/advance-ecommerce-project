@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Filters\ProductFilter;
-use App\Http\Resources\ProductResource;
 use App\Http\Resources\ProductResourceCollection;
+use App\Http\Resources\ProductWithDetailResource;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\MultiImg;
@@ -14,7 +14,6 @@ use App\Models\Product;
 use App\Models\SubCategory;
 use App\Models\SubSubCategory;
 use App\Models\VideoLesson;
-use App\Services\MediaHelper;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
@@ -122,18 +121,7 @@ class ProductController extends Controller
     public function show(int $productId)
     {
         $entry = Product::query()->findOrFail($productId);
-        $entry['user_order_date'] = $entry->user_order_date;
-        $videoLessons = VideoLesson::query()->where('product_id', $productId)->get();
-        $entry['lessons'] = $videoLessons;
-
-        foreach ($entry['lessons'] as $key => $videoLesson) {
-            $medias = $videoLesson->getMedia('videoList');
-            $mediaItem = $medias->first();
-            $videoLink = $this->getLessonVideoDownloadLink($videoLesson);
-            $entry['lessons'][$key]['video'] = $videoLink;
-        }
-
-        return response(new ProductResource(['data' => $entry]));
+        return response(new ProductWithDetailResource(['data' => $entry], true));
     }
 
     public function AddProduct()
@@ -501,17 +489,6 @@ class ProductController extends Controller
 
         $products = Product::latest()->get();
         return view('backend.product.product_stock', compact('products'));
-    }
-
-    /**
-     * @param $isFreeLesson
-     * @param $videoLesson
-     * @return string
-     */
-    private function getLessonVideoDownloadLink($videoLesson): string
-    {
-        $isFreeLesson = $videoLesson->is_free;
-        return $isFreeLesson === 0 ? MediaHelper::getHashedMediaUrlByLessonId($videoLesson->id) : $videoLesson->getFirstMediaUrl('videoList');
     }
 
 
