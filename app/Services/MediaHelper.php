@@ -13,11 +13,12 @@ class MediaHelper
     public static function getHashedMediaUrlByLessonId($videoLessonId): string
     {
         $videoLesson = VideoLesson::query()->findOrFail($videoLessonId);
-
-        $userId = request()->header('user_id');
+//dd($videoLesson);
+        $userId = request()->input('user_id');
         if (!$userId) {
             return '';
         }
+
         $orderItem = OrderItem::with('order')
             ->whereHas('order', function ($query) use ($userId) {
                 $query->where('user_id', '=', $userId);
@@ -36,6 +37,7 @@ class MediaHelper
     public static function getLessonVideoDownloadLink($videoLesson): string
     {
         $isFreeLesson = $videoLesson->is_free;
-        return $isFreeLesson === 0 ? self::getHashedMediaUrlByLessonId($videoLesson->id) : $videoLesson->getFirstMediaUrl('videoList');
+//        dd($isFreeLesson);
+        return $isFreeLesson == 0 ? self::getHashedMediaUrlByLessonId($videoLesson->id) : $videoLesson->getFirstMediaUrl('videoList');
     }
 }
