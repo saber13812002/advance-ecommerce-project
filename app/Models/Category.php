@@ -5,6 +5,7 @@ namespace App\Models;
 use BFilters\Traits\HasFilter;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends Model
@@ -22,5 +23,11 @@ class Category extends Model
         'category_icon',
         'image',
     ];
+
+
+    public function products(): HasMany
+    {
+        return $this->hasMany(Product::class);
+    }
 
 }

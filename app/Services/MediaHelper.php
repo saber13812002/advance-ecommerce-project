@@ -27,4 +27,15 @@ class MediaHelper
 //        dd($orderItem);
         return '/download/' . $orderItem->hashed_key . '/' . $videoLesson->product_id . '/' . $videoLessonId;
     }
+
+    /**
+     * @param $isFreeLesson
+     * @param $videoLesson
+     * @return string
+     */
+    public static function getLessonVideoDownloadLink($videoLesson): string
+    {
+        $isFreeLesson = $videoLesson->is_free;
+        return $isFreeLesson === 0 ? self::getHashedMediaUrlByLessonId($videoLesson->id) : $videoLesson->getFirstMediaUrl('videoList');
+    }
 }

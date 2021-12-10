@@ -13,6 +13,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
 use DB;
+use Illuminate\Http\Request;
 use PDF;
 
 
@@ -91,6 +92,96 @@ class OrderController extends Controller
 
 
     /**
+     * @OA\Patch (path="/api/orders/{orderId}",
+     *   tags={"Orders"},
+     *   summary="patch order status by id",
+     *   description="patch order status by id",
+     *   operationId="patchOrderStatusById",
+     *
+     *  @OA\Parameter(
+     *       description="ID of order",
+     *       name="orderId",
+     *       required=true,
+     *       in="path",
+     *       example="1",
+     *       @OA\Schema(
+     *           type="integer",
+     *           format="int64"
+     *       )
+     *   ),
+     *
+     *     @OA\RequestBody(
+     *         description="set order by microservice without cart",
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/OrderWithOrderItemRequest")
+     *     ),
+     *
+     *   @OA\Response(
+     *     response=200,
+     *     description="successful operation",
+     *     @OA\Schema(
+     *       additionalProperties={
+     *         "type":"integer",
+     *         "format":"int32"
+     *       }
+     *     )
+     *   )
+     * )
+     */
+    public function patch(Request $request, int $id)
+    {
+        $entry = Order::query()->findOrFail($id);
+        $entry->status = $request->status;
+        $entry->save();
+        return response(new OrderResource(['data' => $entry]));
+    }
+    /**
+     * @OA\Patch (path="/api/orders/payments/{paymentId}",
+     *   tags={"Orders"},
+     *   summary="patch order status by paymentId",
+     *   description="patch order status by paymentId",
+     *   operationId="patchOrderStatusBypaymentId",
+     *
+     *  @OA\Parameter(
+     *       description="paymentId",
+     *       name="paymentId",
+     *       required=true,
+     *       in="path",
+     *       example="1",
+     *       @OA\Schema(
+     *           type="integer",
+     *           format="int64"
+     *       )
+     *   ),
+     *
+     *     @OA\RequestBody(
+     *         description="set order by microservice without cart",
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/OrderWithOrderItemRequest")
+     *     ),
+     *
+     *   @OA\Response(
+     *     response=200,
+     *     description="successful operation",
+     *     @OA\Schema(
+     *       additionalProperties={
+     *         "type":"integer",
+     *         "format":"int32"
+     *       }
+     *     )
+     *   )
+     * )
+     */
+    public function patchByPaymentId(Request $request, int $payment_id)
+    {
+        $entry = Order::query()->where('payment_id', $payment_id)->firstOrFail();
+        $entry->status = $request->status;
+        $entry->save();
+        return response(new OrderResource(['data' => $entry]));
+    }
+
+
+    /**
      * @OA\Post (
      *      path="/api/orders",
      *      operationId="setOrderWithOrderItem",
@@ -129,12 +220,14 @@ class OrderController extends Controller
             'division_id' => 1,
             'district_id' => 1,
             'state_id' => 1,
+            'payment_id' => $request->payment_id,
             'name' => $request->user_id,
             'email' => $request->user_id,
             'phone' => $request->user_id,
             'post_code' => $request->user_id,
             'notes' => $request->user_id,
         ];
+
         $order_id = $this->orderRepositoriesImpl->store($data, $request->user_id, $request->total_amount, $request->status, 'Behandam-Product-Service');
 
         $object = new OrderItem();

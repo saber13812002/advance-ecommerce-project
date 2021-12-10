@@ -41,6 +41,7 @@ class OrderWithOrderItemRequest extends BasicRequest
             'product_id' => 'required',
             'user_id' => 'required',
             'total_amount' => 'required',
+            'payment_id' => 'required',
             'status' => 'in:payed,pending',
         ];
     }

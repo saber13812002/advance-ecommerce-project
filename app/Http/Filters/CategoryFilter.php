@@ -12,6 +12,8 @@ class CategoryFilter extends Filter
         parent::__construct($request);
         $this->relations = [];
 
+        $this->validWiths = ['products'];
+
         //$this->sumField = null;
     }
 }
