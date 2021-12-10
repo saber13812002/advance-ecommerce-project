@@ -98,6 +98,7 @@ return [
     "Sub-SubCategory English" => "زیر زیردسته بندی انگلیسی",
     "Sub-SubCategory Hindi" => "زیر زیردسته بندی فارسی",
     "Add Product" => "اضافه کردن محصول",
+    "Edit Product" => "ویرایش محصول",
     "Brand Select" => "اضافه کردن برند",
     "SubSubCategory Select" => "انتخاب زیر زیردسته بندی",
     "Product Name En" => "نام انگلیسی محصول",
