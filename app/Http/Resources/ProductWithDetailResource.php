@@ -18,8 +18,8 @@ class ProductWithDetailResource extends BasicResource
         $videoLessons = VideoLesson::query()->where('product_id', $resource->id)->get();
 
         foreach ($videoLessons as $key => $videoLesson) {
-//            $medias = $videoLesson->getMedia('videoList'); // TODO: if you want media //
-//            $mediaItem = $medias->first();
+            $medias = $videoLesson->getMedia('videoList'); // TODO: if you want media //
+            $mediaItem = $medias->first();
             $videoLink = MediaHelper::getLessonVideoDownloadLink($videoLesson);
 
             $videoLessons[$key]['video'] = $videoLink;

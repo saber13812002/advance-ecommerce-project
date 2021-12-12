@@ -10,23 +10,29 @@ use App\Models\VideoLesson;
 class MediaHelper
 {
 
-    public static function getHashedMediaUrlByLessonId($videoLessonId): string
+    public static function getHashedMediaUrlByLessonId($videoLessonId)
     {
         $videoLesson = VideoLesson::query()->findOrFail($videoLessonId);
-//dd($videoLesson);
+
         $userId = request()->input('user_id');
+
         if (!$userId) {
-            return '';
+            return null;
         }
 
         $orderItem = OrderItem::with('order')
             ->whereHas('order', function ($query) use ($userId) {
-                $query->where('user_id', '=', $userId);
+                $query->where('user_id', '=', $userId)
+                    ->where('status', 'payed');
             })
             ->where('product_id', $videoLesson->product_id)
             ->first();
-//        dd($orderItem);
-        return '/download/' . $orderItem->hashed_key . '/' . $videoLesson->product_id . '/' . $videoLessonId;
+
+        if ($orderItem) {
+            return env('APP_URL') . '/download/' . $orderItem->hashed_key . '/' . $videoLesson->product_id . '/' . $videoLessonId;
+        }
+
+        return null;
     }
 
     /**
@@ -34,7 +40,7 @@ class MediaHelper
      * @param $videoLesson
      * @return string
      */
-    public static function getLessonVideoDownloadLink($videoLesson): string
+    public static function getLessonVideoDownloadLink($videoLesson)
     {
         $isFreeLesson = $videoLesson->is_free;
 //        dd($isFreeLesson);
