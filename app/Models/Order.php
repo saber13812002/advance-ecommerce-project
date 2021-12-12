@@ -35,7 +35,8 @@ class Order extends Model
 
     public function orderItems(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(OrderItem::class);
+        return $this->belongsTo(OrderItem::class, 'id', 'order_id');
     }
+
 
 }

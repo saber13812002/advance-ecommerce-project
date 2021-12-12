@@ -16,7 +16,7 @@ class OrderItem extends Model
         return $this->belongsTo(Product::class, 'product_id', 'id');
     }
 
-    public function order()
+    public function order(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(Order::class, 'id', 'order_id');
     }

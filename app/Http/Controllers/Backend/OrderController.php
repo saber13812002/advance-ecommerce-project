@@ -76,12 +76,9 @@ class OrderController extends Controller
      */
     public function orderProducts(OrderFilter $filters)
     {
-        $entries = Product::get();
-        return response(new ProductResourceCollection(['data' => $entries], true));
-        [$entries, $count, $sum] = Order::with('orderItems.product')->filter($filters);
+        [$entries, $count] = Order::with('orderItems.product')->filter($filters);
         $orders = $entries->get();
-        dd($orders);
-        return response(new OrderResourceCollection(['data' => $entries, 'count' => $count]));
+        return response(new OrderResourceCollection(['data' => $orders, 'count' => $count], true));
     }
 
     /**
@@ -166,6 +163,7 @@ class OrderController extends Controller
         $entry->save();
         return response(new OrderResource(['data' => $entry]));
     }
+
     /**
      * @OA\Patch (path="/api/orders/payments/{paymentId}",
      *   tags={"Orders"},
