@@ -42,7 +42,8 @@ class Product extends Model
 
         $orderItem = OrderItem::with('order')
             ->whereHas('order', function ($query) use ($userId) {
-                $query->where('user_id', '=', $userId);
+                $query->where('user_id', '=', $userId)
+                    ->where('status', 'payed');
             })
             ->where('product_id', $this->id)
             ->orderBy('id', 'desc')

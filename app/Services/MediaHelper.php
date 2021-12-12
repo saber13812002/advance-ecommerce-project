@@ -22,7 +22,8 @@ class MediaHelper
 
         $orderItem = OrderItem::with('order')
             ->whereHas('order', function ($query) use ($userId) {
-                $query->where('user_id', '=', $userId);
+                $query->where('user_id', '=', $userId)
+                    ->where('status', 'payed');
             })
             ->where('product_id', $videoLesson->product_id)
             ->first();
