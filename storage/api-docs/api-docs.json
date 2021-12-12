@@ -435,6 +435,22 @@
                 ]
             }
         },
+        "/api/orders/products": {
+            "get": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Returns products orders as json",
+                "description": "Returns products orders",
+                "operationId": "getProductsOrders",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
         "/api/orders/{orderId}": {
             "get": {
                 "tags": [

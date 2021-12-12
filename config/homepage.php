@@ -27,7 +27,8 @@ return [
         'value' => 2,
         'title' => 'رژیم دکتر کرمانی',
         'action_type' => 'link',
-        'action' => 'https://kermany.com/bmi/'
+        'action' => 'https://kermany.com/bmi/',
+        'target' => '_blank'
     ],
     [
         'style_type' => 'product_category',
@@ -42,7 +43,8 @@ return [
         'value' => 4,
         'title' => 'روانشناسی',
         'action_type' => 'deep_link',
-        'action' => '/psy/intro'
+        'action' => '/psy/intro',
+        'target' => '_blank'
     ],
     [
         'style_type' => 'product_category',
@@ -57,6 +59,7 @@ return [
         'value' => 3,
         'title' => 'فیتامین',
         'action_type' => 'link',
-        'action' => 'https://app.fitamin.ir/'
+        'action' => 'https://app.fitamin.ir/',
+        'target' => '_blank'
     ],
 ];

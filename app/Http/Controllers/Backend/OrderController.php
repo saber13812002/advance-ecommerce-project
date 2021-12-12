@@ -9,9 +9,11 @@ use App\Http\Repositories\OrderRepositoriesImpl;
 use App\Http\Requests\OrderWithOrderItemRequest;
 use App\Http\Resources\OrderResource;
 use App\Http\Resources\OrderResourceCollection;
+use App\Http\Resources\ProductResourceCollection;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
+use Behamin\BResources\Traits\CollectionResource;
 use DB;
 use Illuminate\Http\Request;
 use PDF;
@@ -51,6 +53,32 @@ class OrderController extends Controller
         [$entries, $count, $sum] = Order::filter($filters);
         $entries = $entries->get();
         return response(new OrderResourceCollection(['data' => $entries, 'count' => $count]));
+    }
+
+    /**
+     * @OA\Get(path="/api/orders/products",
+     *   tags={"Orders"},
+     *   summary="Returns products orders as json",
+     *   description="Returns products orders",
+     *   operationId="getProductsOrders",
+     *   parameters={},
+     *   @OA\Response(
+     *     response=200,
+     *     description="successful operation",
+     *     @OA\Schema(
+     *       additionalProperties={
+     *         "type":"integer",
+     *         "format":"int32"
+     *       }
+     *     )
+     *   )
+     * )
+     */
+    public function orderProducts(OrderFilter $filters)
+    {
+        [$entries, $count] = Order::with('orderItems.product')->filter($filters);
+        $orders = $entries->get();
+        return response(new OrderResourceCollection(['data' => $orders, 'count' => $count], true));
     }
 
     /**
@@ -135,6 +163,7 @@ class OrderController extends Controller
         $entry->save();
         return response(new OrderResource(['data' => $entry]));
     }
+
     /**
      * @OA\Patch (path="/api/orders/payments/{paymentId}",
      *   tags={"Orders"},

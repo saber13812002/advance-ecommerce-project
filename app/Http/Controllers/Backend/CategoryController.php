@@ -75,7 +75,7 @@ class CategoryController extends Controller
     {
         [$entries, $count, $sum] = Category::filter($filters);
         $entry = $entries->find($id);
-        return response(new CategoryResource(['data' => $entry]));
+        return response(new CategoryResource(['data' => $entry], true));
     }
 
     public function CategoryView()
