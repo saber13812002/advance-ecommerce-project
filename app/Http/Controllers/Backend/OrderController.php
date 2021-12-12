@@ -12,6 +12,7 @@ use App\Http\Resources\OrderResourceCollection;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
+use Behamin\BResources\Traits\CollectionResource;
 use DB;
 use Illuminate\Http\Request;
 use PDF;
@@ -50,6 +51,33 @@ class OrderController extends Controller
     {
         [$entries, $count, $sum] = Order::filter($filters);
         $entries = $entries->get();
+        return response(new OrderResourceCollection(['data' => $entries, 'count' => $count]));
+    }
+
+    /**
+     * @OA\Get(path="/api/orders/products",
+     *   tags={"Orders"},
+     *   summary="Returns products orders as json",
+     *   description="Returns products orders",
+     *   operationId="getProductsOrders",
+     *   parameters={},
+     *   @OA\Response(
+     *     response=200,
+     *     description="successful operation",
+     *     @OA\Schema(
+     *       additionalProperties={
+     *         "type":"integer",
+     *         "format":"int32"
+     *       }
+     *     )
+     *   )
+     * )
+     */
+    public function orderProducts(OrderFilter $filters)
+    {
+        [$entries, $count, $sum] = Order::with('orderItems.product')->filter($filters);
+        $orders = $entries->get();
+        dd($orders);
         return response(new OrderResourceCollection(['data' => $entries, 'count' => $count]));
     }
 

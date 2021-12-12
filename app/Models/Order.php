@@ -13,21 +13,29 @@ class Order extends Model
 
     protected $guarded = [];
 
-    public function division(){
-    	return $this->belongsTo(ShipDivision::class,'division_id','id');
+    public function division()
+    {
+        return $this->belongsTo(ShipDivision::class, 'division_id', 'id');
     }
 
-      public function district(){
-    	return $this->belongsTo(ShipDistrict::class,'district_id','id');
+    public function district()
+    {
+        return $this->belongsTo(ShipDistrict::class, 'district_id', 'id');
     }
 
-      public function state(){
-    	return $this->belongsTo(ShipState::class,'state_id','id');
+    public function state()
+    {
+        return $this->belongsTo(ShipState::class, 'state_id', 'id');
     }
 
-      public function user(){
-    	return $this->belongsTo(User::class,'user_id','id');
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
+    public function orderItems(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(OrderItem::class);
+    }
 
 }
