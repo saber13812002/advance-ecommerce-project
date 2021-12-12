@@ -10,14 +10,14 @@ use App\Models\VideoLesson;
 class MediaHelper
 {
 
-    public static function getHashedMediaUrlByLessonId($videoLessonId): string
+    public static function getHashedMediaUrlByLessonId($videoLessonId)
     {
         $videoLesson = VideoLesson::query()->findOrFail($videoLessonId);
-//dd($videoLesson);
+
         $userId = request()->input('user_id');
 
         if (!$userId) {
-            return '';
+            return null;
         }
 
         $orderItem = OrderItem::with('order')
@@ -26,13 +26,12 @@ class MediaHelper
             })
             ->where('product_id', $videoLesson->product_id)
             ->first();
-//        dd($orderItem);
-        // TODO if
+
         if ($orderItem) {
             return '/download/' . $orderItem->hashed_key . '/' . $videoLesson->product_id . '/' . $videoLessonId;
         }
 
-        return '/download/' . $videoLesson->product_id . '/' . $videoLessonId;
+        return null;
     }
 
     /**
