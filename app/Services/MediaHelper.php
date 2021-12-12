@@ -39,7 +39,7 @@ class MediaHelper
      * @param $videoLesson
      * @return string
      */
-    public static function getLessonVideoDownloadLink($videoLesson): string
+    public static function getLessonVideoDownloadLink($videoLesson)
     {
         $isFreeLesson = $videoLesson->is_free;
 //        dd($isFreeLesson);
