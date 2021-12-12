@@ -30,4 +30,15 @@ class Category extends Model
         return $this->hasMany(Product::class);
     }
 
+    public function getCategoryNameAttribute()
+    {
+        $current_language = request()->header('Accept-Language');
+        return !$current_language == "en" ? $this->category_name_hin : $this->category_name_en;
+    }
+    public function getCategorySlugAttribute()
+    {
+        $current_language = request()->header('Accept-Language');
+        return !$current_language == "en" ? $this->category_slug_hin : $this->category_slug_en;
+    }
+
 }

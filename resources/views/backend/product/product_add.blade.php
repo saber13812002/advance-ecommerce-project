@@ -32,7 +32,7 @@
 			<div class="col-md-4">
 
 	 <div class="form-group">
-	<h5>{{ trans("admin.Brand Select")   }} <span class="text-danger">*</span></h5>
+	<h5>{{ trans("admin.Brand Select") }} <span class="text-danger">*</span></h5>
 	<div class="controls">
 		<select name="brand_id" class="form-control" required="" >
 			<option value="" selected="" disabled="">Select Brand</option>
@@ -51,7 +51,7 @@
 			<div class="col-md-4">
 
 				 <div class="form-group">
-	<h5>{{ trans("admin.Category Select")   }} <span class="text-danger">*</span></h5>
+	<h5>{{ trans("admin.Category Select") }} <span class="text-danger">*</span></h5>
 	<div class="controls">
 		<select name="category_id" class="form-control" required="" >
 			<option value="" selected="" disabled="">Select Category</option>
