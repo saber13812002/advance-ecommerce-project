@@ -24,6 +24,7 @@ Route::prefix('products')->group(function () {
 // Orders
 Route::prefix('orders')->group(function () {
     Route::get('/', [\App\Http\Controllers\Backend\OrderController::class, 'index'])->name('orders.index');
+    Route::get('/products', [\App\Http\Controllers\Backend\OrderController::class, 'orderProducts'])->name('orders.products');
     Route::get('/{id}', [\App\Http\Controllers\Backend\OrderController::class, 'show'])->name('orders.show');
     Route::post('/', [\App\Http\Controllers\Backend\OrderController::class, 'setOrderWithOrderItem'])->name('orders.post');
     Route::patch('/{id}', [\App\Http\Controllers\Backend\OrderController::class, 'patch'])->name('orders.patch.by.order_id');
