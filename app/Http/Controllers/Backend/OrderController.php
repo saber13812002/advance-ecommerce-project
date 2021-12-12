@@ -9,6 +9,7 @@ use App\Http\Repositories\OrderRepositoriesImpl;
 use App\Http\Requests\OrderWithOrderItemRequest;
 use App\Http\Resources\OrderResource;
 use App\Http\Resources\OrderResourceCollection;
+use App\Http\Resources\ProductResourceCollection;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
@@ -75,6 +76,8 @@ class OrderController extends Controller
      */
     public function orderProducts(OrderFilter $filters)
     {
+        $entries = Product::get();
+        return response(new ProductResourceCollection(['data' => $entries], true));
         [$entries, $count, $sum] = Order::with('orderItems.product')->filter($filters);
         $orders = $entries->get();
         dd($orders);
