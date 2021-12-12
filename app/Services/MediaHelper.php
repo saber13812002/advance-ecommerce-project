@@ -28,7 +28,7 @@ class MediaHelper
             ->first();
 
         if ($orderItem) {
-            return '/download/' . $orderItem->hashed_key . '/' . $videoLesson->product_id . '/' . $videoLessonId;
+            return env('APP_URL') . '/download/' . $orderItem->hashed_key . '/' . $videoLesson->product_id . '/' . $videoLessonId;
         }
 
         return null;
