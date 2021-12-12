@@ -47,7 +47,7 @@ class HomePagePlaceHolderService
         $data = array();
         $data['style_type'] = $config['style_type'];
         // TODO connect to database for future
-        $data['target'] = $config['_blank'];
+        $data['target'] = $config['target'];
         $banner_id = (integer)$config['value'];
 
         $data['banner'] = app()->make(SliderRepository::class)
