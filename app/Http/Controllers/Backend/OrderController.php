@@ -74,11 +74,20 @@ class OrderController extends Controller
      *   )
      * )
      */
-    public function orderProducts(OrderFilter $filters)
+    public function orderProducts(Request $request)
     {
-        [$entries, $count] = Order::with('orderItems.product')->filter($filters);
-        $orders = $entries->get();
-        return response(new OrderResourceCollection(['data' => $orders, 'count' => $count], true));
+        $userId = request()->input('user_id');
+
+        if (!$userId) {
+            return null;
+        }
+
+        $orders = Order::with('orderItems.product')
+            ->where('user_id', $userId)
+            ->where('status', 'payed')
+            ->get();
+
+        return response(new OrderResourceCollection(['data' => $orders], true));
     }
 
     /**
