@@ -84,6 +84,7 @@ class OrderController extends Controller
 
         $orders = Order::with('orderItems.product')
             ->where('user_id', $userId)
+            ->where('status', 'payed')
             ->get();
 
         return response(new OrderResourceCollection(['data' => $orders], true));
