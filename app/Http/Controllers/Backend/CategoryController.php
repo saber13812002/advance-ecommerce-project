@@ -71,10 +71,11 @@ class CategoryController extends Controller
      *   )
      * )
      */
-    public function show(int $id)
+    public function show(CategoryFilter $filters, int $id)
     {
-        $entry = Category::query()->findOrFail($id);
-        return response(new CategoryResource(['data' => $entry]));
+        [$entries, $count, $sum] = Category::filter($filters);
+        $entry = $entries->find($id);
+        return response(new CategoryResource(['data' => $entry], true));
     }
 
     public function CategoryView()

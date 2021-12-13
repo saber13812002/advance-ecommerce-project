@@ -51,6 +51,9 @@ class HomePagePlaceHolderService
         $data['banner'] = app()->make(SliderRepository::class)
             ->get($banner_id);
 
+        // TODO connect to database for future
+        $data['banner']['target'] = $config['target'];
+
         return $data;
     }
 

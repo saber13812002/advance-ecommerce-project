@@ -24,6 +24,7 @@ class OrderRepositoriesImpl
 
             'payment_type' => $payment_type,
             'payment_method' => $payment_type,
+            'payment_id' => $data['payment_id'],
 
             'currency' => $currency,
             'amount' => $total_amount,

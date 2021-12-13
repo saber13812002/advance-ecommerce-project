@@ -2,9 +2,11 @@
 
 namespace App\Http\Resources;
 
+use App\Models\VideoLesson;
+use App\Services\MediaHelper;
 use Behamin\BResources\Resources\BasicResource;
 
-class ProductResource extends BasicResource
+class ProductWithDetailResource extends BasicResource
 {
     public function __construct($resource, $transform = false)
     {
@@ -13,6 +15,16 @@ class ProductResource extends BasicResource
 
     public function getArray($resource)
     {
+        $videoLessons = VideoLesson::query()->where('product_id', $resource->id)->get();
+
+        foreach ($videoLessons as $key => $videoLesson) {
+            $medias = $videoLesson->getMedia('videoList'); // TODO: if you want media //
+            $mediaItem = $medias->first();
+            $videoLink = MediaHelper::getLessonVideoDownloadLink($videoLesson);
+
+            $videoLessons[$key]['video'] = $videoLink;
+        }
+
         return [
             "id" => (integer)$resource->id,
             "brand_id" => (integer)$resource->brand_id,
@@ -41,8 +53,8 @@ class ProductResource extends BasicResource
             "short_description" => $resource->short_description,
             "short_descp_en" => $resource->short_descp_en,
             "short_descp_hin" => $resource->short_descp_hin,
-            "long_descp_en" => $resource->long_descp_en,
             "long_description" => $resource->long_description,
+            "long_descp_en" => $resource->long_descp_en,
             "long_descp_hin" => $resource->long_descp_hin,
             "product_thambnail" => $resource->product_thambnail,
             "hot_deals" => $resource->hot_deals,
@@ -56,6 +68,7 @@ class ProductResource extends BasicResource
             "user_order_date" => $resource->user_order_date,
             "action_type" => $resource->action_type,
             "action" => $resource->action,
+            "lessons" => $videoLessons,
         ];
     }
 }

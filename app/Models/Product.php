@@ -42,9 +42,11 @@ class Product extends Model
 
         $orderItem = OrderItem::with('order')
             ->whereHas('order', function ($query) use ($userId) {
-                $query->where('user_id', '=', $userId);
+                $query->where('user_id', '=', $userId)
+                    ->where('status', 'payed');
             })
             ->where('product_id', $this->id)
+            ->orderBy('id', 'desc')
             ->first();
 
         if (!$orderItem) {
@@ -52,6 +54,48 @@ class Product extends Model
         }
 
         return Carbon::parse($orderItem->created_at)->format('d-m-Y');
+    }
+
+    public function getProductNameAttribute()
+    {
+        $current_language = request()->header('Accept-Language');
+        return !$current_language == "en" ? $this->product_name_hin : $this->product_name_en;
+    }
+
+    public function getProductSlugAttribute()
+    {
+        $current_language = request()->header('Accept-Language');
+        return !$current_language == "en" ? $this->product_slug_hin : $this->product_slug_en;
+    }
+
+    public function getProductTagsAttribute()
+    {
+        $current_language = request()->header('Accept-Language');
+        return !$current_language == "en" ? $this->product_tags_hin : $this->product_tags_en;
+    }
+
+    public function getProductSizeAttribute()
+    {
+        $current_language = request()->header('Accept-Language');
+        return !$current_language == "en" ? $this->product_size_hin : $this->product_size_en;
+    }
+
+    public function getProductColorAttribute()
+    {
+        $current_language = request()->header('Accept-Language');
+        return !$current_language == "en" ? $this->product_color_hin : $this->product_color_en;
+    }
+
+    public function getShortDescriptionAttribute()
+    {
+        $current_language = request()->header('Accept-Language');
+        return !$current_language == "en" ? $this->short_descp_hin : $this->short_descp_en;
+    }
+
+    public function getLongDescriptionAttribute()
+    {
+        $current_language = request()->header('Accept-Language');
+        return !$current_language == "en" ? $this->long_descp_hin : $this->long_descp_en;
     }
 
 

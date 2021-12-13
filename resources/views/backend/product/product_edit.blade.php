@@ -13,7 +13,7 @@
 		 <!-- Basic Forms -->
 		  <div class="box">
 			<div class="box-header with-border">
-			  <h4 class="box-title">Edit Product </h4>
+			  <h4 class="box-title">{{ trans("admin.Edit Product") }} </h4>
 
                 <a href="{{ route('product.view.video.lessons.list',$products->id) }}" class="btn btn-info" title="Show Video Lesson List"><i class="fa fa-youtube"></i> </a>
 
@@ -34,7 +34,7 @@
 			<div class="col-md-4">
 
 	 <div class="form-group">
-	<h5>Brand Select <span class="text-danger">*</span></h5>
+	<h5>{{ trans("admin.Brand Select") }} <span class="text-danger">*</span></h5>
 	<div class="controls">
 		<select name="brand_id" class="form-control" required="" >
 			<option value="" selected="" disabled="">Select Brand</option>
@@ -53,7 +53,7 @@
 			<div class="col-md-4">
 
 				 <div class="form-group">
-	<h5>Category Select <span class="text-danger">*</span></h5>
+	<h5>{{ trans("admin.Category Select") }} <span class="text-danger">*</span></h5>
 	<div class="controls">
 		<select name="category_id" class="form-control" required="" >
 			<option value="" selected="" disabled="">Select Category</option>

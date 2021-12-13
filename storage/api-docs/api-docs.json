@@ -435,6 +435,22 @@
                 ]
             }
         },
+        "/api/orders/products": {
+            "get": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Returns products orders as json",
+                "description": "Returns products orders",
+                "operationId": "getProductsOrders",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
         "/api/orders/{orderId}": {
             "get": {
                 "tags": [
@@ -456,6 +472,82 @@
                         "example": "1"
                     }
                 ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "patch order status by id",
+                "description": "patch order status by id",
+                "operationId": "patchOrderStatusById",
+                "parameters": [
+                    {
+                        "name": "orderId",
+                        "in": "path",
+                        "description": "ID of order",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "example": "1"
+                    }
+                ],
+                "requestBody": {
+                    "description": "set order by microservice without cart",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/OrderWithOrderItemRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/api/orders/payments/{paymentId}": {
+            "patch": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "patch order status by paymentId",
+                "description": "patch order status by paymentId",
+                "operationId": "patchOrderStatusBypaymentId",
+                "parameters": [
+                    {
+                        "name": "paymentId",
+                        "in": "path",
+                        "description": "paymentId",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "example": "1"
+                    }
+                ],
+                "requestBody": {
+                    "description": "set order by microservice without cart",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/OrderWithOrderItemRequest"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "successful operation"
