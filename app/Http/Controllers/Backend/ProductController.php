@@ -135,7 +135,6 @@ class ProductController extends Controller
 
     public function StoreProduct(Request $request)
     {
-
         $request->validate([
             'file' => 'required|mimes:jpeg,png,jpg,zip,pdf|max:2048',
         ]);
@@ -148,8 +147,8 @@ class ProductController extends Controller
 
 
         $image = $request->file('product_thambnail');
-        $name_gen = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
-        Image::make($image)->resize(917, 1000)->save('storage/upload/products/thambnail/' . $name_gen);
+        $name_gen = date('Y-m-d-H:i:s') . hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
+        Image::make($image)->resize(917, 1000)->save(public_path('/upload/products/thambnail/') . $name_gen);
         $save_url = 'storage/upload/products/thambnail/' . $name_gen;
 
         $product_id = Product::insertGetId([
@@ -191,13 +190,12 @@ class ProductController extends Controller
 
         ]);
 
-
         ////////// Multiple Image Upload Start ///////////
 
         $images = $request->file('multi_img');
         foreach ($images as $img) {
-            $make_name = hexdec(uniqid()) . '.' . $img->getClientOriginalExtension();
-            Image::make($img)->resize(917, 1000)->save('storage/upload/products/multi-image/' . $make_name);
+            $make_name = date('Y-m-d-H:i:s') . hexdec(uniqid()) . '.' . $img->getClientOriginalExtension();
+            Image::make($img)->resize(917, 1000)->save(public_path('/upload/products/multi-image/') . $make_name);
             $uploadPath = 'storage/upload/products/multi-image/' . $make_name;
 
             MultiImg::insert([
