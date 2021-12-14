@@ -148,7 +148,7 @@ class ProductController extends Controller
 
         $image = $request->file('product_thambnail');
         $name_gen = date('Y-m-d-H:i:s') . hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
-        Image::make($image)->resize(917, 1000)->save('storage/upload/products/thambnail/' . $name_gen);
+        Image::make($image)->resize(917, 1000)->save(public_path('/upload/products/thambnail/') . $name_gen);
         $save_url = 'storage/upload/products/thambnail/' . $name_gen;
 
         $product_id = Product::insertGetId([
