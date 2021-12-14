@@ -135,7 +135,6 @@ class ProductController extends Controller
 
     public function StoreProduct(Request $request)
     {
-
         $request->validate([
             'file' => 'required|mimes:jpeg,png,jpg,zip,pdf|max:2048',
         ]);
@@ -190,7 +189,6 @@ class ProductController extends Controller
             'created_at' => Carbon::now(),
 
         ]);
-
 
         ////////// Multiple Image Upload Start ///////////
 

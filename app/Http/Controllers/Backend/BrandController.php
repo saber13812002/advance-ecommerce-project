@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Filters\BrandFilter;
 use App\Http\Resources\BrandResource;
 use App\Http\Resources\BrandResourceCollection;
+use File;
 use Illuminate\Http\Request;
 use App\Models\Brand;
 use Image;
@@ -38,6 +39,7 @@ class BrandController extends Controller
         $entries = $entries->get();
         return response(new BrandResourceCollection(['data' => $entries, 'count' => $count]));
     }
+
     /**
      * @OA\Get(path="/api/brands/{brandId}",
      *   tags={"Brands"},
@@ -96,10 +98,13 @@ class BrandController extends Controller
             'brand_name_hin.required' => 'Input Brand Hindi Name',
         ]);
 
+        $path = 'storage/upload/brand/';
+        File::makeDirectory($path);
+
         $image = $request->file('brand_image');
         $name_gen = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
-        Image::make($image)->resize(300, 300)->save('storage/upload/brand/' . $name_gen);
-        $save_url = 'storage/upload/brand/' . $name_gen;
+        Image::make($image)->resize(300, 300)->save($path . $name_gen);
+        $save_url = $path . $name_gen;
 
         Brand::insert([
             'brand_name_en' => $request->brand_name_en,
@@ -140,10 +145,13 @@ class BrandController extends Controller
                 unlink($old_img);
             }
 
+            $path = 'storage/upload/brand/';
+            File::makeDirectory($path);
+
             $image = $request->file('brand_image');
             $name_gen = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
-            Image::make($image)->resize(300, 300)->save('storage/upload/brand/' . $name_gen);
-            $save_url = 'storage/upload/brand/' . $name_gen;
+            Image::make($image)->resize(300, 300)->save($path . $name_gen);
+            $save_url = $path . $name_gen;
 
             Brand::findOrFail($brand_id)->update([
                 'brand_name_en' => $request->brand_name_en,
