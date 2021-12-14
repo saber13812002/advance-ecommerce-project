@@ -43,7 +43,7 @@ return [
         'value' => 4,
         'title' => 'روانشناسی',
         'action_type' => 'deep_link',
-        'action' => '/psy/intro',
+        'action' => 'psy/intro',
         'target' => '_blank'
     ],
     [
