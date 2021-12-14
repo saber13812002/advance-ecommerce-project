@@ -146,9 +146,13 @@ class CategoryController extends Controller
             }
             $image = $request->file('image');
 
+
+            $path = 'storage/upload/category/';
+            File::makeDirectory($path);
+
             $name_gen = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
-            Image::make($image)->resize(870, 370)->save('storage/upload/category/' . $name_gen);
-            $save_url = 'storage/upload/category/' . $name_gen;
+            Image::make($image)->resize(870, 370)->save($path . $name_gen);
+            $save_url = $path . $name_gen;
 
             Category::findOrFail($id)->update([
                 'category_name_en' => $request->category_name_en,
