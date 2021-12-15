@@ -40,8 +40,8 @@
                                     <tr>
                                         <td>{{ ++$key }}</td>
                                         <td>{{ $videoLesson->lesson_name }}</td>
-                                        <td>{{ $videoLesson->active?1:0 }}</td>
-                                        <td>{{ $videoLesson->free?1:0 }}</td>
+                                        <td>{{ $videoLesson->is_active?"1":"0" }}</td>
+                                        <td>{{ $videoLesson->is_free?"1":"0" }}</td>
                                         <td>{{ $videoLesson->order }}</td>
                                         <td>{{ $videoLesson->weight }}</td>
                                         <td>{{ $videoLesson->score }}</td>

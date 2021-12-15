@@ -21,12 +21,17 @@ class ProductVideoLessonController extends Controller
     {
         $valiator = $request->validate([
             'name' => 'required',
-            'order' => 'required',
+            'order' => 'numeric',
+            'is_free' => 'numeric',
+            'minutes' => 'numeric',
             'media' => 'required',
         ]);
 
         $videoLesson = new VideoLesson();
         $videoLesson->lesson_name = $request->name;
+        $videoLesson->order = $request->order;
+        $videoLesson->is_free = (bool)$request->is_free;
+        $videoLesson->minutes = $request->minutes;
         $videoLesson->product_id = $productId;
         $videoLesson->save();
 
@@ -53,6 +58,8 @@ class ProductVideoLessonController extends Controller
         $videoLesson = VideoLesson::query()->findOrFail($request->product_id);
         $videoLesson->lesson_name = $request->name;
         $videoLesson->order = $request->order;
+        $videoLesson->is_free = (bool)$request->is_free;
+        $videoLesson->minutes = $request->minutes;
         $videoLesson->product_id = $request->product_id;
         $videoLesson->save();
 
@@ -89,6 +96,8 @@ class ProductVideoLessonController extends Controller
         $videoLesson = VideoLesson::query()->findOrFail($lessonId);
         $videoLesson->lesson_name = $request->name;
         $videoLesson->order = $request->order;
+        $videoLesson->is_free = (bool)$request->is_free;
+        $videoLesson->minutes = $request->minutes;
         $videoLesson->save();
 
         if ($request->hasFile('media') && $request->file('media')->isValid()) {

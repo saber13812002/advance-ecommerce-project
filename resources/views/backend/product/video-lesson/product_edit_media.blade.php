@@ -36,7 +36,23 @@
                                         <label for="">order:</label>
                                         <input type="number" name="order" class="form-control"
                                                value="{{$videoLesson->order}}"
-                                               placeholder="Enter Order Name">
+                                               placeholder="Enter Order ">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 mb-3">
+                                        <label for="">is free:</label>
+                                        <input type="number" name="is_free" class="form-control"
+                                               value="{{$videoLesson->is_free}}"
+                                               placeholder="Enter is free">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 mb-3">
+                                        <label for="">minutes:</label>
+                                        <input type="number" name="minutes" class="form-control"
+                                               value="{{$videoLesson->minutes}}"
+                                               placeholder="Enter minutes">
                                     </div>
                                 </div>
                                 <div class="row">
