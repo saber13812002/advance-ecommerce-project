@@ -12,12 +12,9 @@ use App\Models\MultiImg;
 use App\Models\Product;
 use App\Models\SubCategory;
 use App\Models\SubSubCategory;
-use App\Models\VideoLesson;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Artisan;
 use Image;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class ProductController extends Controller
 {
@@ -51,33 +48,6 @@ class ProductController extends Controller
     public function create(ProductFilter $filters)
     {
         return view('backend.product.create');
-    }
-
-    /**
-     * Write Your Code..
-     *
-     * @return string
-     */
-    public function store(Request $request)
-    {
-        $input = $request->all();
-        $valiator = $request->validate([
-            'name' => 'required',
-//            'detail' => 'required',
-            'image' => 'required',
-        ]);
-
-        $videoLesson = new VideoLesson();
-        $videoLesson->lesson_name = $request->name;
-        $videoLesson->product_id = $request->product_id;
-        $videoLesson->save();
-
-        if ($request->hasFile('image') && $request->file('image')->isValid()) {
-            $videoLesson->addMediaFromRequest('image')->toMediaCollection('videoList');
-        }
-
-        return redirect()->route('product.view.video.lessons.list', $request->product_id);
-
     }
 
     /**
@@ -140,7 +110,7 @@ class ProductController extends Controller
 
 
         $image = $request->file('product_thambnail');
-        $name_gen = date('Y-m-d-H:i:s') . hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
+        $name_gen = date('Y-m-d-H-i-s') . hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
         $save_url = 'storage/upload/products/thambnail/' . $name_gen;
 
         $product_id = Product::insertGetId([
@@ -189,7 +159,7 @@ class ProductController extends Controller
 
         $images = $request->file('multi_img');
         foreach ($images as $img) {
-            $make_name = date('Y-m-d-H:i:s') . hexdec(uniqid()) . '.' . $img->getClientOriginalExtension();
+            $make_name = date('Y-m-d-H-i-s') . hexdec(uniqid()) . '.' . $img->getClientOriginalExtension();
             Image::make($img)->resize(917, 1000)->save(public_path('/upload/products/multi-image/') . $make_name);
             $uploadPath = 'storage/upload/products/multi-image/' . $make_name;
 
@@ -234,60 +204,6 @@ class ProductController extends Controller
         return view('backend.product.product_edit', compact('categories', 'brands', 'subcategory', 'subSubCategory', 'products', 'multiImgs'));
     }
 
-
-    public function viewVideoLessonsList($productId)
-    {
-        $videoLessons = VideoLesson::where('product_id', $productId)->get();
-
-        return view('backend.product.product_view_video_lessons_list', compact('videoLessons', 'productId'));
-    }
-
-
-    public function UploadVideoLesson($productId)
-    {
-        return view('backend.product.product_edit_media', compact('productId'));
-    }
-
-    public function MultiMediaUpdate(Request $request, int $productId)
-    {
-//        dd($productId);
-        $products = Product::query()->findOrFail($productId);
-        if ($request->hasFile('video') && $request->file('video')->isValid()) {
-            $products->addMediaFromRequest('video')->toMediaCollection('videoList');
-            $notification = array(
-                'message' => 'Product Media Updated Successfully',
-                'alert-type' => 'success'
-            );
-
-            return redirect()->route('product.view.video.lessons.list', $productId)->with($notification);
-        }
-        $notification = array(
-            'message' => 'Product Media Failed',
-            'alert-type' => 'error'
-        );
-
-        return redirect()->route('product.edit.media', $productId)->with($notification);
-    }
-
-    public function MultiMediaDelete($videoLessonId)
-    {
-        $videoLesson = VideoLesson::query()->findOrFail($videoLessonId);
-        $videoLesson->delete();
-
-        $medias = $videoLesson->getMedia('videoList');
-        $media = $medias->first();
-        $myMedia = Media::find($media->id);
-        $myMedia->update(['collection_name' => 'videoListDeleted']);
-        Artisan::call('media-library:regenerate --ids=' . $myMedia->id);
-
-
-        $notification = array(
-            'message' => 'Product Media Deleted Successfully',
-            'alert-type' => 'success'
-        );
-
-        return redirect()->route('product.view.video.lessons.list', $videoLesson->product_id)->with($notification);
-    }
 
     public function ProductDataUpdate(Request $request)
     {
