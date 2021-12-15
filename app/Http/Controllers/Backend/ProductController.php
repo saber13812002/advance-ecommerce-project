@@ -9,7 +9,6 @@ use App\Http\Resources\ProductWithDetailResource;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\MultiImg;
-use App\Models\Prod;
 use App\Models\Product;
 use App\Models\SubCategory;
 use App\Models\SubSubCategory;
@@ -47,12 +46,6 @@ class ProductController extends Controller
         [$entries, $count, $sum] = Product::filter($filters);
         $entries = $entries->get();
         return response(new ProductResourceCollection(['data' => $entries, 'count' => $count], true));
-    }
-
-    public function index2(ProductFilter $filters)
-    {
-        $products = Prod::latest()->get();
-        return view('backend.product.index', compact('products'));
     }
 
     public function create(ProductFilter $filters)
