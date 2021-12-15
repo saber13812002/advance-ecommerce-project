@@ -14,7 +14,7 @@
                             <h4 class="box-title">Product VideoLesson Upload</h4>
                         </div>
 
-                        <form method="post" action="{{ route('product.store') }}"
+                        <form method="post" action="{{ route('product.video_lessons.store.item', $productId) }}"
                               enctype="multipart/form-data">
                             @csrf
                             <div class="text-xs-right">
@@ -39,10 +39,17 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12 mb-3">
+                                        <label for="">order:</label>
+                                        <input type="number" name="order" class="form-control" value="0"
+                                               placeholder="Enter Order Name">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 mb-3">
                                         <label for="">Video:</label>
-                                        <input type="file" name="image" class="form-control">
-                                        @if ($errors->has('image'))
-                                            <span class="text-danger">{{ $errors->first('image') }}</span>
+                                        <input type="file" name="media" class="form-control">
+                                        @if ($errors->has('media'))
+                                            <span class="text-danger">{{ $errors->first('media') }}</span>
                                         @endif
                                     </div>
                                 </div>

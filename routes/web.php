@@ -9,6 +9,7 @@ use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\ProductController;
+use App\Http\Controllers\Backend\ProductVideoLessonController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\CouponController;
 use App\Http\Controllers\Backend\ShippingAreaController;
@@ -168,15 +169,11 @@ Route::middleware(['auth:admin'])->group(function () {
         Route::post('/store', [ProductController::class, 'StoreProduct'])->name('product-store');
         Route::get('/manage', [ProductController::class, 'ManageProduct'])->name('manage-product');
 
-        Route::get('/edit/{product_id}/video-lessons', [ProductController::class, 'viewVideoLessonsList'])->name('product.view.video.lessons.list');
-        Route::get('/edit/{product_id}/upload-video-lesson', [ProductController::class, 'UploadVideoLesson'])->name('product.edit.media');
-        Route::post('/media/update/{product_id}', [ProductController::class, 'MultiMediaUpdate'])->name('update-product-media');
-        Route::get('/multiMedia/delete/{video_lesson_id}', [ProductController::class, 'MultiMediaDelete'])->name('product.multiMedia.delete');
-
         // media library sample for future
         Route::get('product', [ProductController::class, 'index2'])->name('product');
         Route::get('product/create', [ProductController::class, 'create'])->name('product.create');
-        Route::post('product/store', [ProductController::class, 'store'])->name('product.store');
+        Route::post('product/store', [ProductController::class, 'StoreProduct'])->name('product.store');
+        Route::post('product/update', [ProductController::class, 'update'])->name('product.update');
 
 
         Route::get('/edit/{id}', [ProductController::class, 'EditProduct'])->name('product.edit');
@@ -194,6 +191,14 @@ Route::middleware(['auth:admin'])->group(function () {
         Route::get('/active/{id}', [ProductController::class, 'ProductActive'])->name('product.active');
 
         Route::get('/delete/{id}', [ProductController::class, 'ProductDelete'])->name('product.delete');
+
+
+        Route::get('/edit/{product_id}/video-lessons', [ProductVideoLessonController::class, 'viewVideoLessonsList'])->name('product.video_lessons.list.view');
+        Route::get('/edit/{product_id}/video-lesson', [ProductVideoLessonController::class, 'AddVideoLesson'])->name('product.video_lessons.edit.item');
+        Route::get('/edit/{product_id}/video-lesson/{lesson_id}', [ProductVideoLessonController::class, 'EditVideoLesson'])->name('product.video_lessons.add.item');
+        Route::post('/media/store/{product_id}', [ProductVideoLessonController::class, 'store'])->name('product.video_lessons.store.item');
+        Route::post('/media/update/{lesson_id}', [ProductVideoLessonController::class, 'MultiMediaUpdate'])->name('product.video_lessons.update.item');
+        Route::get('/multiMedia/delete/{video_lesson_id}', [ProductVideoLessonController::class, 'MultiMediaDelete'])->name('product.video_lessons.delete.item');
 
     });
 
@@ -549,7 +554,6 @@ Route::post('search-product', [IndexController::class, 'SearchProduct']);
 // Shop Page Route
 Route::get('/shop', [ShopController::class, 'ShopPage'])->name('shop.page');
 Route::post('/shop/filter', [ShopController::class, 'ShopFilter'])->name('shop.filter');
-
 
 
 // download
