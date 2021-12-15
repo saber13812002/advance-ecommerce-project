@@ -85,8 +85,8 @@ class SliderController extends Controller
 
     public function SliderEdit($id)
     {
-        $sliders = Slider::findOrFail($id);
-        return view('backend.slider.slider_edit', compact('sliders'));
+        $slider = Slider::findOrFail($id);
+        return view('backend.slider.slider_edit', compact('slider'));
     }
 
 
