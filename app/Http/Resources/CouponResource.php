@@ -28,13 +28,13 @@ class CouponResource extends BasicResource
         }
 
         return [
-//            "id" => (integer)$resource->id,
+            "id" => (integer)$resource->id,
 //            "coupon_name" => $resource->coupon_name,
 //            "model_name" => $resource->model_name,
 //            "model_id" => $resource->model_id,
             "discount" => $discount,
             "final_price" => $final_price,
-            "expired_at" => $resource->expired_at,
+//            "expired_at" => $resource->expired_at,
         ];
     }
 }
