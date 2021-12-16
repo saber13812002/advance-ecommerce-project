@@ -29,14 +29,14 @@
 
                                 <form method="post" action="{{ route('slider.update') }}" enctype="multipart/form-data">
                                     @csrf
-                                    <input type="hidden" name="id" value="{{ $sliders->id }}">
-                                    <input type="hidden" name="old_image" value="{{ $sliders->slider_img }}">
+                                    <input type="hidden" name="id" value="{{ $slider->id }}">
+                                    <input type="hidden" name="old_image" value="{{ $slider->slider_img }}">
 
                                     <div class="form-group">
                                         <h5>Slider Title <span class="text-danger">*</span></h5>
                                         <div class="controls">
                                             <input type="text" name="title" class="form-control"
-                                                   value="{{ $sliders->title }}">
+                                                   value="{{ $slider->title }}">
 
                                         </div>
                                     </div>
@@ -46,7 +46,7 @@
                                         <h5>Slider Decription <span class="text-danger">*</span></h5>
                                         <div class="controls">
                                             <input type="text" name="description" class="form-control"
-                                                   value="{{ $sliders->description }}">
+                                                   value="{{ $slider->description }}">
 
                                         </div>
                                     </div>
@@ -56,7 +56,7 @@
                                         <h5>Slider Group ID <span class="text-danger">*</span></h5>
                                         <div class="controls">
                                             <input type="text" name="group_id" class="form-control"
-                                                   value="{{ $sliders->group_id }}">
+                                                   value="{{ $slider->group_id }}">
 
                                         </div>
                                     </div>
@@ -65,7 +65,7 @@
                                         <h5>Slider model ID <span class="text-danger">*</span></h5>
                                         <div class="controls">
                                             <input type="text" name="model_id" class="form-control"
-                                                   value="{{ $sliders->model_id }}">
+                                                   value="{{ $slider->model_id }}">
 
                                         </div>
                                     </div>
@@ -74,7 +74,7 @@
                                         <h5>Slider model Name <span class="text-danger">*</span></h5>
                                         <div class="controls">
                                             <input type="text" name="model_name" class="form-control"
-                                                   value="{{ $sliders->model_name }}">
+                                                   value="{{ $slider->model_name }}">
 
                                         </div>
                                     </div>
@@ -83,7 +83,7 @@
                                         <h5>Slider Action Type <span class="text-danger">*</span></h5>
                                         <div class="controls">
                                             <input type="text" name="action_type" class="form-control"
-                                                   value="{{ $sliders->action_type }}">
+                                                   value="{{ $slider->action_type }}">
 
                                         </div>
                                     </div>
@@ -92,7 +92,7 @@
                                         <h5>Slider Action <span class="text-danger">*</span></h5>
                                         <div class="controls">
                                             <input type="text" name="action" class="form-control"
-                                                   value="{{ $sliders->action }}">
+                                                   value="{{ $slider->action }}">
 
                                         </div>
                                     </div>

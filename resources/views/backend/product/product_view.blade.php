@@ -2,124 +2,128 @@
 @section('admin')
 
 
-  <!-- Content Wrapper. Contains page content -->
+    <!-- Content Wrapper. Contains page content -->
 
-	  <div class="container-full">
-		<!-- Content Header (Page header) -->
-
-
-		<!-- Main content -->
-		<section class="content">
-		  <div class="row">
+    <div class="container-full">
+        <!-- Content Header (Page header) -->
 
 
-
-			<div class="col-12">
-
-			 <div class="box">
-				<div class="box-header with-border">
-				  <h3 class="box-title">{{ trans("admin.Product List")   }} <span class="badge badge-pill badge-danger"> {{ count($products) }} </span></h3>
-				</div>
-				<!-- /.box-header -->
-				<div class="box-body">
-					<div class="table-responsive">
-					  <table id="example1" class="table table-bordered table-striped">
-						<thead>
-							<tr>
-
-								<th>{{ trans("admin.Image")   }} </th>
-                                <th>{{ trans("admin.Product En")   }}</th>
-                                <th>{{ trans("admin.Product Hin")   }}</th>
-								<th>{{ trans("admin.Product Price")   }} </th>
-								<th>{{ trans("admin.Quantity")   }} </th>
-								<th>{{ trans("admin.Discount")   }} </th>
-								<th>{{ trans("admin.Status")   }} </th>
-								<th>{{ trans("admin.Action")   }}</th>
-
-							</tr>
-						</thead>
-						<tbody>
-	 @foreach($products as $item)
-	 <tr>
-		<td> <img src="{{ asset($item->product_thambnail) }}" style="width: 60px; height: 50px;">  </td>
-         <td>{{ $item->product_name_en }}</td>
-         <td>{{ $item->product_name_hin }}</td>
-		 <td>{{ $item->selling_price }} $</td>
-		 <td>{{ $item->product_qty }} Pic</td>
-
-		 <td>
-		 	@if($item->discount_price == NULL)
-		 	<span class="badge badge-pill badge-danger">No Discount</span>
-
-		 	@else
-		 	@php
-		 	$amount = $item->selling_price - $item->discount_price;
-		 	$discount = ($amount/$item->selling_price) * 100;
-		 	@endphp
-   <span class="badge badge-pill badge-danger">{{ round($discount)  }} %</span>
-
-		 	@endif
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
 
 
+                <div class="col-12">
 
-		 </td>
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">{{ trans("admin.Product List")   }} <span
+                                    class="badge badge-pill badge-danger"> {{ count($products) }} </span></h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <div class="table-responsive">
+                                <table id="example1" class="table table-bordered table-striped">
+                                    <thead>
+                                    <tr>
 
-		 <td>
-		 	@if($item->status == 1)
-		 	<span class="badge badge-pill badge-success"> Active </span>
-		 	@else
-           <span class="badge badge-pill badge-danger"> InActive </span>
-		 	@endif
+                                        <th>{{ trans("admin.Image")   }} </th>
+                                        <th>{{ trans("admin.Product En")   }}</th>
+                                        <th>{{ trans("admin.Product Hin")   }}</th>
+                                        <th>{{ trans("admin.Product Price")   }} </th>
+                                        <th>{{ trans("admin.Quantity")   }} </th>
+                                        <th>{{ trans("admin.Discount")   }} </th>
+                                        <th>{{ trans("admin.Status")   }} </th>
+                                        <th>{{ trans("admin.Action")   }}</th>
 
-		 </td>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($products as $item)
+                                        <tr>
+                                            <td><img src="{{ asset($item->product_thambnail) }}"
+                                                     style="width: 60px; height: 50px;"></td>
+                                            <td>{{ $item->product_name_en }}</td>
+                                            <td>{{ $item->product_name_hin }}</td>
+                                            <td>{{ $item->selling_price }} $</td>
+                                            <td>{{ $item->product_qty }} Pic</td>
 
+                                            <td>
+                                                @if($item->discount_price == NULL)
+                                                    <span class="badge badge-pill badge-danger">No Discount</span>
 
-		<td width="30%">
- <a href="{{ route('product.edit',$item->id) }}" class="btn btn-primary" title="Product Details Data"><i class="fa fa-eye"></i> </a>
+                                                @else
+                                                    @php
+                                                        $amount = $item->selling_price - $item->discount_price;
+                                                        $discount = ($amount/$item->selling_price) * 100;
+                                                    @endphp
+                                                    <span class="badge badge-pill badge-danger">{{ round($discount)  }} %</span>
 
-            <a href="{{ route('product.edit',$item->id) }}" class="btn btn-info" title="Edit Data"><i class="fa fa-pencil"></i> </a>
-
-            <a href="{{ route('product.view.video.lessons.list',$item->id) }}" class="btn btn-info" title="View List of Video Lessons"><i class="fa fa-youtube"></i> </a>
-
- <a href="{{ route('product.delete',$item->id) }}" class="btn btn-danger" title="Delete Data" id="delete">
- 	<i class="fa fa-trash"></i></a>
-
-@if($item->status == 1)
- <a href="{{ route('product.inactive',$item->id) }}" class="btn btn-danger" title="Inactive Now"><i class="fa fa-arrow-down"></i> </a>
-	 @else
- <a href="{{ route('product.active',$item->id) }}" class="btn btn-success" title="Active Now"><i class="fa fa-arrow-up"></i> </a>
-	 @endif
-
-
-
-
-		</td>
-
-	 </tr>
-	  @endforeach
-						</tbody>
-
-					  </table>
-					</div>
-				</div>
-				<!-- /.box-body -->
-			  </div>
-			  <!-- /.box -->
-
-
-			</div>
-			<!-- /.col -->
-
+                                                @endif
 
 
+                                            </td>
+
+                                            <td>
+                                                @if($item->status == 1)
+                                                    <span class="badge badge-pill badge-success"> Active </span>
+                                                @else
+                                                    <span class="badge badge-pill badge-danger"> InActive </span>
+                                                @endif
+
+                                            </td>
 
 
-		  </div>
-		  <!-- /.row -->
-		</section>
-		<!-- /.content -->
+                                            <td width="30%">
+                                                <a href="{{ route('product.edit',$item->id) }}" class="btn btn-primary"
+                                                   title="Product Details Data"><i class="fa fa-eye"></i> </a>
 
-	  </div>
+                                                <a href="{{ route('product.edit',$item->id) }}" class="btn btn-info"
+                                                   title="Edit Data"><i class="fa fa-pencil"></i> </a>
+
+                                                <a href="{{ route('product.video_lessons.list.view',$item->id) }}"
+                                                   class="btn btn-info" title="View List of Video Lessons"><i
+                                                        class="fa fa-youtube"></i> </a>
+
+                                                <a href="{{ route('product.delete',$item->id) }}" class="btn btn-danger"
+                                                   title="Delete Data" id="delete">
+                                                    <i class="fa fa-trash"></i></a>
+
+                                                @if($item->status == 1)
+                                                    <a href="{{ route('product.inactive',$item->id) }}"
+                                                       class="btn btn-danger" title="Inactive Now"><i
+                                                            class="fa fa-arrow-down"></i> </a>
+                                                @else
+                                                    <a href="{{ route('product.active',$item->id) }}"
+                                                       class="btn btn-success" title="Active Now"><i
+                                                            class="fa fa-arrow-up"></i> </a>
+                                                @endif
+
+
+                                            </td>
+
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+
+
+                </div>
+                <!-- /.col -->
+
+
+            </div>
+            <!-- /.row -->
+        </section>
+        <!-- /.content -->
+
+    </div>
 
 
 

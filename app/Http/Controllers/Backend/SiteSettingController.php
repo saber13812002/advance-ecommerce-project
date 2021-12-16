@@ -29,10 +29,13 @@ class SiteSettingController extends Controller
 
 
             $path = 'storage/upload/logo/';
-            File::makeDirectory($path);
+
+            if (!File::exists($path)) {
+                File::makeDirectory($path);
+            }
 
             $image = $request->file('logo');
-            $name_gen = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
+            $name_gen = date('Y-m-d-H-i-s') . hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
             Image::make($image)->resize(139, 36)->save($path . $name_gen);
             $save_url = $path . $name_gen;
 

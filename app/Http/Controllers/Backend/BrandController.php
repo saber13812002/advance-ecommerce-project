@@ -99,10 +99,13 @@ class BrandController extends Controller
         ]);
 
         $path = 'storage/upload/brand/';
-        File::makeDirectory($path);
+
+        if (!File::exists($path)) {
+            File::makeDirectory($path);
+        }
 
         $image = $request->file('brand_image');
-        $name_gen = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
+        $name_gen = date('Y-m-d-H-i-s') . hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
         Image::make($image)->resize(300, 300)->save($path . $name_gen);
         $save_url = $path . $name_gen;
 
@@ -146,10 +149,13 @@ class BrandController extends Controller
             }
 
             $path = 'storage/upload/brand/';
-            File::makeDirectory($path);
+
+            if (!File::exists($path)) {
+                File::makeDirectory($path);
+            }
 
             $image = $request->file('brand_image');
-            $name_gen = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
+            $name_gen = date('Y-m-d-H-i-s') . hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
             Image::make($image)->resize(300, 300)->save($path . $name_gen);
             $save_url = $path . $name_gen;
 

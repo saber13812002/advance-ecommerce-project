@@ -57,8 +57,8 @@ class SliderController extends Controller
         ]);
 
         $image = $request->file('slider_img');
-        $name_gen = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
-        Image::make($image)->resize(870, 370)->save('storage/upload/slider/' . $name_gen);
+        $name_gen = date('Y-m-d-H-i-s') . hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
+        Image::make($image)->resize(870, 370)->save(public_path('/upload/slider/') . $name_gen);
         $save_url = 'storage/upload/slider/' . $name_gen;
 
         Slider::insert([
@@ -85,8 +85,8 @@ class SliderController extends Controller
 
     public function SliderEdit($id)
     {
-        $sliders = Slider::findOrFail($id);
-        return view('backend.slider.slider_edit', compact('sliders'));
+        $slider = Slider::findOrFail($id);
+        return view('backend.slider.slider_edit', compact('slider'));
     }
 
 
@@ -101,8 +101,8 @@ class SliderController extends Controller
                 unlink($old_img);
             }
             $image = $request->file('slider_img');
-            $name_gen = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
-            Image::make($image)->resize(870, 370)->save('storage/upload/slider/' . $name_gen);
+            $name_gen = date('Y-m-d-H-i-s') . hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
+            Image::make($image)->resize(870, 370)->save(public_path('/upload/slider/') . $name_gen);
             $save_url = 'storage/upload/slider/' . $name_gen;
 
             Slider::findOrFail($slider_id)->update([

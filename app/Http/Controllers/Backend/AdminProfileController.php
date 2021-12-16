@@ -41,7 +41,10 @@ class AdminProfileController extends Controller
         $data->email = $request->email;
 
         $path = 'storage/upload/admin_images/';
-        File::makeDirectory($path);
+
+        if (!File::exists($path)) {
+            File::makeDirectory($path);
+        }
 
         if ($request->file('profile_photo_path')) {
             $file = $request->file('profile_photo_path');
