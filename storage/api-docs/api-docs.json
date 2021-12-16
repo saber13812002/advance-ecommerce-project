@@ -336,7 +336,7 @@
             }
         },
         "/api/coupons/{couponName}": {
-            "get": {
+            "post": {
                 "tags": [
                     "Coupons"
                 ],
