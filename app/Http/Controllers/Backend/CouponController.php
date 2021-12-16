@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CouponRequest;
 use App\Http\Resources\CouponResource;
 use App\Http\Resources\CouponResourceCollection;
 use App\Http\Resources\ProductWithDetailResource;
@@ -43,7 +44,7 @@ class CouponController extends Controller
 
 
     /**
-     * @OA\Get(path="/api/coupons/{couponName}",
+     * @OA\Post (path="/api/coupons/{couponName}",
      *   tags={"Coupons"},
      *   summary="Returns coupon by name as json",
      *   description="Return coupon by name",
@@ -77,14 +78,14 @@ class CouponController extends Controller
      *   )
      * )
      */
-    public function show(CouponResource $request, string $couponName)
+    public function show(CouponRequest $request, string $couponName)
     {
         if (!$request->product_id) {
             abort("404", "کوپن اعمال نشد و نا معتبر است");
         }
 
         $entry = Coupon::query()->whereCouponName($couponName)->firstOrFail();
-
+        $entry->product_id = request()->product_id;
         return response(new CouponResource(['data' => $entry], true));
     }
 
