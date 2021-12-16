@@ -336,7 +336,7 @@
             }
         },
         "/api/coupons/{couponName}": {
-            "get": {
+            "post": {
                 "tags": [
                     "Coupons"
                 ],
@@ -352,9 +352,19 @@
                         "schema": {
                             "type": "string"
                         },
-                        "example": "1QOP4D"
+                        "example": "TAKHFIF"
                     }
                 ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CouponRequest"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "successful operation"
@@ -705,6 +715,14 @@
     },
     "components": {
         "schemas": {
+            "CouponRequest": {
+                "title": "CouponRequest",
+                "description": "Coupon Request",
+                "type": "object",
+                "example": {
+                    "product_id": 1
+                }
+            },
             "OrderWithOrderItemRequest": {
                 "title": "OrderWithOrderItemRequest",
                 "description": "Order With OrderItem Request",

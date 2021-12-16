@@ -45,7 +45,7 @@ Route::prefix('homepage')->group(function () {
 // Coupons
 Route::prefix('coupons')->group(function () {
     Route::get('/', [\App\Http\Controllers\Backend\CouponController::class, 'index'])->name('coupons.index');
-    Route::get('/{id}', [\App\Http\Controllers\Backend\CouponController::class, 'show'])->name('coupons.show');
+    Route::post('/{id}', [\App\Http\Controllers\Backend\CouponController::class, 'show'])->name('coupons.show');
 });
 
 // BlogPosts
