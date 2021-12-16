@@ -14,7 +14,14 @@ class CouponResource extends BasicResource
     public function getArray($resource)
     {
         return [
-            //
+            "id" => (integer)$resource->id,
+            "coupon_name" => $resource->coupon_name,
+            "model_type" => $resource->model_type,
+            "model_id" => $resource->model_id,
+            "expired_at" => $resource->expired_at,
+            "discount" => 1000,
+            "final_price" => 10000,
+            "order_id" => 20,
         ];
     }
 }

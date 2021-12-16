@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CouponResource;
 use App\Http\Resources\CouponResourceCollection;
+use App\Http\Resources\ProductWithDetailResource;
+use App\Models\Product;
 use BFilters\Filter;
 use Illuminate\Http\Request;
 use App\Models\Coupon;
@@ -36,6 +39,43 @@ class CouponController extends Controller
         [$entries, $count, $sum] = Coupon::filter($filters);
         $entries = $entries->get();
         return response(new CouponResourceCollection(['data' => $entries, 'count' => $count], true));
+    }
+
+
+    /**
+     * @OA\Get(path="/api/coupons/{couponName}",
+     *   tags={"Coupons"},
+     *   summary="Returns coupon by name as json",
+     *   description="Return coupon by name",
+     *   operationId="getCouponsByName",
+     *
+     *  @OA\Parameter(
+     *       description="couponName",
+     *       name="couponName",
+     *       required=true,
+     *       in="path",
+     *       example="1QOP4D",
+     *       @OA\Schema(
+     *           type="string"
+     *       )
+     *   ),
+     *
+     *   @OA\Response(
+     *     response=200,
+     *     description="successful operation",
+     *     @OA\Schema(
+     *       additionalProperties={
+     *         "type":"integer",
+     *         "format":"int32"
+     *       }
+     *     )
+     *   )
+     * )
+     */
+    public function show(string $couponName)
+    {
+        $entry = Coupon::query()->whereCouponName($couponName)->firstOrFail();
+        return response(new CouponResource(['data' => $entry], true));
     }
 
     public function CouponView()
