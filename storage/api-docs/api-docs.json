@@ -335,22 +335,6 @@
                 }
             }
         },
-        "/api/coupons": {
-            "get": {
-                "tags": [
-                    "Coupons"
-                ],
-                "summary": "Returns coupons as json",
-                "description": "Returns coupons",
-                "operationId": "getCoupons",
-                "parameters": [],
-                "responses": {
-                    "200": {
-                        "description": "successful operation"
-                    }
-                }
-            }
-        },
         "/api/coupons/{couponName}": {
             "get": {
                 "tags": [
