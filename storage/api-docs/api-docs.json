@@ -335,6 +335,49 @@
                 }
             }
         },
+        "/api/coupons": {
+            "get": {
+                "tags": [
+                    "Coupons"
+                ],
+                "summary": "Returns coupons as json",
+                "description": "Returns coupons",
+                "operationId": "getCoupons",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/api/coupons/{couponName}": {
+            "get": {
+                "tags": [
+                    "Coupons"
+                ],
+                "summary": "Returns coupon by name as json",
+                "description": "Return coupon by name",
+                "operationId": "getCouponsByName",
+                "parameters": [
+                    {
+                        "name": "couponName",
+                        "in": "path",
+                        "description": "couponName",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "1QOP4D"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
         "/api/homepage": {
             "get": {
                 "tags": [
