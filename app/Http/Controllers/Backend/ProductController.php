@@ -266,7 +266,7 @@ class ProductController extends Controller
                 unlink($imgDel->photo_name);
             }
 
-            $make_name = hexdec(uniqid()) . '.' . $img->getClientOriginalExtension();
+            $make_name = date('Y-m-d-H-i-s') . hexdec(uniqid()) . '.' . $img->getClientOriginalExtension();
             Image::make($img)->resize(917, 1000)->save('storage/upload/products/multi-image/' . $make_name);
             $uploadPath = 'storage/upload/products/multi-image/' . $make_name;
 
@@ -297,7 +297,7 @@ class ProductController extends Controller
         }
 
         $image = $request->file('product_thambnail');
-        $name_gen = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
+        $name_gen = date('Y-m-d-H-i-s') . hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
         Image::make($image)->resize(917, 1000)->save('storage/upload/products/thambnail/' . $name_gen);
         $save_url = 'storage/upload/products/thambnail/' . $name_gen;
 
