@@ -54,10 +54,15 @@ class CouponController extends Controller
      *       name="couponName",
      *       required=true,
      *       in="path",
-     *       example="1QOP4D",
+     *       example="TAKHFIF",
      *       @OA\Schema(
      *           type="string"
      *       )
+     *   ),
+     *
+     *   @OA\RequestBody(
+     *       required=true,
+     *       @OA\JsonContent(ref="#/components/schemas/CouponRequest")
      *   ),
      *
      *   @OA\Response(
@@ -72,9 +77,14 @@ class CouponController extends Controller
      *   )
      * )
      */
-    public function show(string $couponName)
+    public function show(CouponResource $request, string $couponName)
     {
+        if (!$request->product_id) {
+            abort("404", "کوپن اعمال نشد و نا معتبر است");
+        }
+
         $entry = Coupon::query()->whereCouponName($couponName)->firstOrFail();
+
         return response(new CouponResource(['data' => $entry], true));
     }
 
