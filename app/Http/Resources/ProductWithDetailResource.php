@@ -15,13 +15,15 @@ class ProductWithDetailResource extends BasicResource
 
     public function getArray($resource)
     {
-        $videoLessons = VideoLesson::query()->where('product_id', $resource->id)->get();
+        $videoLessons = VideoLesson::query()
+            ->where('product_id', $resource->id)
+            ->orderBy('order', 'asc')
+            ->get();
 
         foreach ($videoLessons as $key => $videoLesson) {
             $medias = $videoLesson->getMedia('videoList'); // TODO: if you want media //
             $mediaItem = $medias->first();
             $videoLink = MediaHelper::getLessonVideoDownloadLink($videoLesson);
-
             $videoLessons[$key]['video'] = $videoLink;
         }
 
