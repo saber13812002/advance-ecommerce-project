@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Services\StringActions;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -20,10 +21,10 @@ class Authenticate extends Middleware
             $relatedPath = str_replace(url('/'), '', url()->previous());
             $collectionPath = Str::of($relatedPath)->split('/[\s\/]+/');
 
-            if ($collectionPath[1]) {
-                if ($collectionPath[1] == "admin" || $collectionPath[1] == "dashboard") {
-                    route('admin.login.page');
-                }
+            $isAdminPanel = StringActions::searchUrl((array)$collectionPath,"admin");
+
+            if ($isAdminPanel) {
+                route('admin.login.page');
             }
         }
         return route('login');
