@@ -41,6 +41,13 @@ Route::prefix('homepage')->group(function () {
     Route::get('/', [\App\Http\Controllers\Backend\HomePageController::class, 'index'])->name('homepage.index');
 });
 
+
+// Coupons
+Route::prefix('coupons')->group(function () {
+    Route::get('/', [\App\Http\Controllers\Backend\CouponController::class, 'index'])->name('coupons.index');
+    Route::post('/{id}', [\App\Http\Controllers\Backend\CouponController::class, 'show'])->name('coupons.show');
+});
+
 // BlogPosts
 Route::prefix('blog-posts')->group(function () {
     Route::get('/', [\App\Http\Controllers\Backend\BlogController::class, 'index'])->name('blog.posts.index');

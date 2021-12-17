@@ -47,6 +47,7 @@ class OrderResource extends BasicResource
             "long_descp_en" => $product->long_descp_en,
             "long_description" => $product->long_description,
             "long_descp_hin" => $product->long_descp_hin,
+            "owner_name" => $product->owner_name,
             "product_thambnail" => $product->product_thambnail,
             "hot_deals" => $product->hot_deals,
             "featured" => $product->featured,

@@ -98,14 +98,16 @@ class CategoryController extends Controller
             'category_name_hin.required' => 'Input Category Hindi Name',
             'image.required' => 'Plz Select One Image',
         ]);
-        $path = 'storage/upload/category/';
-        File::makeDirectory($path);
-
         $image = $request->file('image');
-        $name_gen = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
-        Image::make($image)->resize(870, 370)->save($path . $name_gen);
-        $save_url = $path . $name_gen;
 
+        $path = 'storage/upload/category/';
+        if (!File::exists($path)) {
+            File::makeDirectory($path);
+        }
+        $savePath = public_path('/upload/category/');
+        $name_gen = date('Y-m-d-H-i-s') . hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
+        Image::make($image)->resize(870, 370)->save($savePath . $name_gen);
+        $save_url = $path . $name_gen;
 
         Category::insert([
             'category_name_en' => $request->category_name_en,
@@ -148,10 +150,13 @@ class CategoryController extends Controller
 
 
             $path = 'storage/upload/category/';
-            File::makeDirectory($path);
 
-            $name_gen = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
-            Image::make($image)->resize(870, 370)->save($path . $name_gen);
+            if (!File::exists($path)) {
+                File::makeDirectory($path);
+            }
+            $savePath = public_path('/upload/category/');
+            $name_gen = date('Y-m-d-H-i-s') . hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
+            Image::make($image)->resize(870, 370)->save($savePath . $name_gen);
             $save_url = $path . $name_gen;
 
             Category::findOrFail($id)->update([

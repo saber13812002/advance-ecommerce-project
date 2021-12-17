@@ -13,7 +13,8 @@
                         <div class="box-header">
                             <h4 class="box-title">Product VideoLesson List</h4>
 
-                            <a href="{{ route('product.edit.media',$productId) }}" class="btn btn-info" title="Add Video Lesson"><i class="fa fa-plus"></i> </a>
+                            <a href="{{ route('product.video_lessons.edit.item',$productId) }}" class="btn btn-info"
+                               title="Add Video Lesson"><i class="fa fa-plus"></i> </a>
 
                         </div>
 
@@ -39,8 +40,8 @@
                                     <tr>
                                         <td>{{ ++$key }}</td>
                                         <td>{{ $videoLesson->lesson_name }}</td>
-                                        <td>{{ $videoLesson->active?1:0 }}</td>
-                                        <td>{{ $videoLesson->free?1:0 }}</td>
+                                        <td>{{ $videoLesson->is_active?"1":"0" }}</td>
+                                        <td>{{ $videoLesson->is_free?"1":"0" }}</td>
                                         <td>{{ $videoLesson->order }}</td>
                                         <td>{{ $videoLesson->weight }}</td>
                                         <td>{{ $videoLesson->score }}</td>
@@ -48,19 +49,22 @@
                                         <td>{{ $videoLesson->views }}</td>
                                         <td>{{ $videoLesson->downloads }}</td>
                                         <td width="30%">
-                                        <video width="30%" src="{{$videoLesson->getFirstMediaUrl('videoList')}}"
-                                               controls>
-                                        </video>
-                                        <div class="card-body">
-                                            <h5 class="card-title">
-                                                <a href="{{ route('product.multiMedia.delete', $videoLesson->id) }}"
-                                                   class="btn btn-sm btn-danger" id="delete" title="Delete Data"><i
-                                                        class="fa fa-trash"></i> </a>
-                                            </h5>
-                                            <p class="card-text">
-                                            </p>
+                                            <video width="30%" src="{{$videoLesson->getFirstMediaUrl('videoList')}}"
+                                                   controls>
+                                            </video>
+                                            <div class="card-body">
+                                                <h5 class="card-title">
+                                                    <a href="{{ route('product.video_lessons.delete.item', $videoLesson->id) }}"
+                                                       class="btn btn-sm btn-danger" id="delete" title="Delete Data"><i
+                                                            class="fa fa-trash"></i> </a>
+                                                    <a href="{{ route('product.video_lessons.add.item', [$productId,$videoLesson->id]) }}"
+                                                       class="btn btn-sm btn" id="edit" title="Edit Data"><i
+                                                            class="fa fa-edit"></i> </a>
+                                                </h5>
+                                                <p class="card-text">
+                                                </p>
 
-                                        </div>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach

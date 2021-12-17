@@ -34,10 +34,13 @@ class AdminUserController extends Controller
 
 
         $path = 'storage/upload/admin_images/';
-        File::makeDirectory($path);
+
+        if (!File::exists($path)) {
+            File::makeDirectory($path);
+        }
 
         $image = $request->file('profile_photo_path');
-        $name_gen = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
+        $name_gen = date('Y-m-d-H-i-s') . hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
         Image::make($image)->resize(225, 225)->save($path . $name_gen);
         $save_url = $path . $name_gen;
 
@@ -103,11 +106,14 @@ class AdminUserController extends Controller
 
 
             $path = 'storage/upload/admin_images/';
-            File::makeDirectory($path);
+
+            if (!File::exists($path)) {
+                File::makeDirectory($path);
+            }
 
             $image = $request->file('profile_photo_path');
-            $name_gen = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
-            Image::make($image)->resize(225, 225)->save( $path. $name_gen);
+            $name_gen = date('Y-m-d-H-i-s') . hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
+            Image::make($image)->resize(225, 225)->save($path . $name_gen);
             $save_url = $path . $name_gen;
 
             Admin::findOrFail($admin_id)->update([
