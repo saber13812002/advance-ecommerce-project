@@ -1,4 +1,6 @@
 * text=auto
+*.php linguist-vendored
+*.html linguist-detectable=false
 *.css linguist-vendored
 *.scss linguist-vendored
 *.js linguist-vendored
