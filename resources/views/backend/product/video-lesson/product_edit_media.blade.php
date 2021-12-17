@@ -64,7 +64,7 @@
                                         @endif
                                     </div>
                                 </div>
-                                <input type="submit" class="btn btn-rounded btn-primary mb-5" value="Upload">
+                                <input type="submit" class="btn btn-rounded btn-primary mb-5" value="Update">
                             </div>
                             <br><br>
                         </form>
