@@ -56,6 +56,7 @@ class ProductWithDetailResource extends BasicResource
             "long_description" => $resource->long_description,
             "long_descp_en" => $resource->long_descp_en,
             "long_descp_hin" => $resource->long_descp_hin,
+            "owner_name" => $resource->owner_name,
             "product_thambnail" => $resource->product_thambnail,
             "hot_deals" => $resource->hot_deals,
             "featured" => $resource->featured,

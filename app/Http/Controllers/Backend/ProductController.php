@@ -124,6 +124,10 @@ class ProductController extends Controller
             'product_slug_hin' => str_replace(' ', '-', $request->product_name_hin),
             'product_code' => $request->product_code,
 
+            'owner_name' => $request->owner_name,
+            'owner_model_name' => $request->owner_model_name,
+            'owner_model_id' => $request->owner_model_id,
+
             'product_qty' => $request->product_qty,
             'product_tags_en' => $request->product_tags_en,
             'product_tags_hin' => $request->product_tags_hin,
@@ -200,8 +204,8 @@ class ProductController extends Controller
         $brands = Brand::latest()->get();
         $subcategory = SubCategory::latest()->get();
         $subSubCategory = SubSubCategory::latest()->get();
-        $products = Product::findOrFail($id);
-        return view('backend.product.product_edit', compact('categories', 'brands', 'subcategory', 'subSubCategory', 'products', 'multiImgs'));
+        $product = Product::findOrFail($id);
+        return view('backend.product.product_edit', compact('categories', 'brands', 'subcategory', 'subSubCategory', 'product', 'multiImgs'));
     }
 
 
@@ -220,6 +224,11 @@ class ProductController extends Controller
             'product_slug_en' => strtolower(str_replace(' ', '-', $request->product_name_en)),
             'product_slug_hin' => str_replace(' ', '-', $request->product_name_hin),
             'product_code' => $request->product_code,
+
+
+            'owner_name' => $request->owner_name,
+            'owner_model_name' => $request->owner_model_name,
+            'owner_model_id' => $request->owner_model_id,
 
             'product_qty' => $request->product_qty,
             'product_tags_en' => $request->product_tags_en,
