@@ -73,7 +73,9 @@ class ProductVideoLessonController extends Controller
 
     public function viewVideoLessonsList($productId)
     {
-        $videoLessons = VideoLesson::where('product_id', $productId)->get();
+        $videoLessons = VideoLesson::where('product_id', $productId)
+            ->orderBy('order', 'asc')
+            ->get();
         return view('backend.product.video-lesson.product_view_video_lessons_list', compact('videoLessons', 'productId'));
     }
 
