@@ -34,6 +34,11 @@ class ShopServiceProvider extends ServiceProvider
             Interfaces\Repositories\ProductRepository::class,
             Repositories\ProductRepositoryImpl::class
         );
+
+        $this->app->bind(
+            Interfaces\Repositories\CouponRepository::class,
+            Repositories\CouponRepositoryImpl::class
+        );
     }
 
     /**

@@ -4,14 +4,13 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CouponRequest;
-use App\Http\Resources\CouponResource;
 use App\Http\Resources\CouponResourceCollection;
-use App\Http\Resources\ProductWithDetailResource;
-use App\Models\Product;
-use BFilters\Filter;
-use Illuminate\Http\Request;
+use App\Interfaces\Repositories\CouponRepository;
 use App\Models\Coupon;
+use Behamin\BResources\Resources\BasicResource;
+use BFilters\Filter;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class CouponController extends Controller
 {
@@ -80,13 +79,13 @@ class CouponController extends Controller
      */
     public function show(CouponRequest $request, string $couponName)
     {
-        if (!$request->product_id) {
-            abort("404", "کوپن اعمال نشد و نا معتبر است");
+        try {
+            return app()->make(CouponRepository::class)
+                ->show($request, $couponName);
+        } catch (\Exception $ex) {
+            $data["error"]["message"] = "کوپن پیدا نشد";
+            return BasicResource::make($data);
         }
-
-        $entry = Coupon::query()->whereCouponName($couponName)->firstOrFail();
-        $entry->product_id = request()->product_id;
-        return response(new CouponResource(['data' => $entry], true));
     }
 
     public function CouponView()
