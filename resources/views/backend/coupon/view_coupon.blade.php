@@ -27,7 +27,11 @@
                                     <thead>
                                     <tr>
                                         <th>{{ trans("admin.Coupon Name")   }} </th>
-                                        <th>{{ trans("admin.Coupon Discount")   }}</th>
+                                        <th>{{ trans("admin.Coupon Discount") }}</th>
+                                        <th>{{ trans("admin.model_name")   }} </th>
+                                        <th>{{ trans("admin.model_id")   }} </th>
+                                        <th>{{ trans("admin.coupon_discount_type")   }} </th>
+                                        <th>{{ trans("admin.expired_at")   }} </th>
                                         <th>{{ trans("admin.Validity")   }} </th>
                                         <th>{{ trans("admin.Status")   }} </th>
                                         <th>{{ trans("admin.Action")   }}</th>
@@ -38,7 +42,11 @@
                                     @foreach($coupons as $item)
                                         <tr>
                                             <td> {{ $item->coupon_name }}  </td>
-                                            <td> {{ $item->coupon_discount }}%</td>
+                                            <td> {{ $item->coupon_discount }}  </td>
+                                            <td> {{ $item->model_name }}</td>
+                                            <td> {{ $item->model_id }}</td>
+                                            <td> {{ $item->coupon_discount_type }}</td>
+                                            <td> {{ $item->expired_at }}</td>
                                             <td width="25%">
                                                 {{ Carbon\Carbon::parse($item->coupon_validity)->format('D, d F Y') }}
                                             </td>
@@ -49,7 +57,6 @@
                                                 @else
                                                     <span class="badge badge-pill badge-danger"> Invalid </span>
                                                 @endif
-
                                             </td>
 
                                             <td width="25%">
@@ -106,16 +113,61 @@
 
 
                                     <div class="form-group">
-                                        <h5>{{ trans("admin.Coupon Discount(%)")   }} <span class="text-danger">*</span>
+                                        <h5>{{ trans("admin.Coupon Discount") }} <span class="text-danger">*</span>
                                         </h5>
                                         <div class="controls">
                                             <input type="text" name="coupon_discount" class="form-control">
-                                            @error('coupon_name')
+                                            @error('coupon_discount')
                                             <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </div>
                                     </div>
 
+                                    <div class="form-group">
+                                        <h5>{{ trans("admin.model_name")   }} <span class="text-danger">*</span></h5>
+                                        <div class="controls">
+                                            <input type="text" name="model_name" class="form-control">
+                                            @error('model_name')
+                                            <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <h5>{{ trans("admin.model_id")   }} <span class="text-danger">*</span></h5>
+                                        <div class="controls">
+                                            <input type="text" name="model_id" class="form-control">
+                                            @error('model_id')
+                                            <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <h5>{{ trans("admin.coupon_discount_type")   }} <span class="text-danger">*</span></h5>
+                                        <div class="controls">
+                                            <select name="coupon_discount_type" class="form-control">
+                                                <option value="" selected="" disabled="">Select Type</option>
+                                                <option value="Percent">Percent</option>
+                                                <option value="Toman">Toman</option>
+                                            </select>
+                                            @error('coupon_discount_type')
+                                            <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <h5>{{ trans("admin.expired_at")   }} <span class="text-danger">*</span></h5>
+                                        <div class="controls">
+                                            <input type="text" name="expired_at" class="form-control">
+                                            @error('expired_at')
+                                            <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
 
                                     <div class="form-group">
                                         <h5>{{ trans("admin.Coupon Validity Date")   }} <span

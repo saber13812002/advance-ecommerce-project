@@ -102,6 +102,10 @@ class CouponController extends Controller
 
         $request->validate([
             'coupon_name' => 'required',
+            'model_name' => 'required',
+            'model_id' => 'required',
+            'coupon_discount_type' => 'required',
+            'expired_at' => 'required',
             'coupon_discount' => 'required',
             'coupon_validity' => 'required',
 
@@ -111,6 +115,10 @@ class CouponController extends Controller
         Coupon::insert([
             'coupon_name' => strtoupper($request->coupon_name),
             'coupon_discount' => $request->coupon_discount,
+            'model_name' => $request->model_name,
+            'model_id' => $request->model_id,
+            'coupon_discount_type' => $request->coupon_discount_type,
+            'expired_at' => $request->expired_at,
             'coupon_validity' => $request->coupon_validity,
             'created_at' => Carbon::now(),
 
@@ -122,7 +130,6 @@ class CouponController extends Controller
         );
 
         return redirect()->back()->with($notification);
-
     }
 
 
@@ -135,13 +142,15 @@ class CouponController extends Controller
 
     public function CouponUpdate(Request $request, $id)
     {
-
         Coupon::findOrFail($id)->update([
             'coupon_name' => strtoupper($request->coupon_name),
             'coupon_discount' => $request->coupon_discount,
+            'model_name' => $request->model_name,
+            'model_id' => $request->model_id,
+            'coupon_discount_type' => $request->coupon_discount_type,
+            'expired_at' => $request->expired_at,
             'coupon_validity' => $request->coupon_validity,
-            'created_at' => Carbon::now(),
-
+            'updated_at' => Carbon::now(),
         ]);
 
         $notification = array(
@@ -150,14 +159,11 @@ class CouponController extends Controller
         );
 
         return redirect()->route('manage-coupon')->with($notification);
-
-
     }
 
 
     public function CouponDelete($id)
     {
-
         Coupon::findOrFail($id)->delete();
         $notification = array(
             'message' => 'Coupon Deleted Successfully',
@@ -165,7 +171,6 @@ class CouponController extends Controller
         );
 
         return redirect()->back()->with($notification);
-
     }
 
 
