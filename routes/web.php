@@ -136,7 +136,6 @@ Route::middleware(['auth:admin'])->prefix('admin')->group(function () {
     Route::prefix('product')->group(function () {
 
         Route::get('/add', [ProductController::class, 'AddProduct'])->name('add-product');
-
         Route::post('/store', [ProductController::class, 'StoreProduct'])->name('product-store');
         Route::get('/manage', [ProductController::class, 'ManageProduct'])->name('manage-product');
 

@@ -69,17 +69,12 @@ Route::prefix('categories')->group(function () {
 
 
 Route::middleware('auth:sanctum')->group(function () {
-
     Route::prefix('users')->group(function () {
-
         Route::prefix('reviews')->group(function () {
             Route::get('/', [\App\Http\Controllers\User\ReviewController::class, 'productPublishedReview'])->name('reviews.me');
         });
-
         Route::get('/profile/me', [AuthenticationController::class, 'myProfile']);
-
         Route::post('/logout', [AuthenticationController::class, 'logout']);
-
         Route::post('/token/refresh', [AuthenticationController::class, 'refreshToken']);
     });
 });
@@ -97,7 +92,6 @@ Route::post('/login', [AuthenticationController::class, 'loginEmail']);
 Route::post('/register', [AuthenticationController::class, 'register']);
 //login user
 Route::post('/login', [AuthenticationController::class, 'login']);
-
 
 Route::prefix('test')->group(function () {
     Route::get('/{videoLessonId}', [\App\Services\MediaHelper::class, 'getHashedMediaUrlByLessonId'])->name('test');

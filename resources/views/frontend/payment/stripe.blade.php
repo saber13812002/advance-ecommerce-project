@@ -75,12 +75,12 @@
                                                 <strong>{{trans('SubTotal')}}: </strong> {{ $cartTotal }} {{trans('site.CURRENCYTYPE')}}
                                                 <hr>
 
-                                                <strong>Coupon Name
+                                                <strong>{{ trans("admin.Coupon Name")   }}
                                                     : </strong> {{ session()->get('coupon')['coupon_name'] }}
                                                 ( {{ session()->get('coupon')['coupon_discount'] }} % )
                                                 <hr>
 
-                                                <strong>Coupon Discount : </strong>
+                                                <strong>{{ trans("admin.Coupon Discount") }} : </strong>
                                                 ${{ session()->get('coupon')['discount_amount'] }}
                                                 <hr>
 
