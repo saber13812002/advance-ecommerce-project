@@ -14,7 +14,8 @@ use Behamin\BResources\Requests\BasicRequest;
  *           "product_id": 5,
  *           "user_id": 5,
  *           "total_amount": 50000,
- *           "status": "pending|payed"
+ *           "status": "pending|payed",
+ *           "payment_id": 50000
  *      }
  * )
  */

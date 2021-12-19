@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use File;
-use Illuminate\Http\Request;
 use App\Models\Admin;
 use Carbon\Carbon;
-use Auth;
+use File;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Image;
 
@@ -69,6 +68,7 @@ class AdminUserController extends Controller
             'type' => 2,
             'profile_photo_path' => $save_url,
             'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
 
 
         ]);

@@ -35,6 +35,7 @@ class OrderRepositoriesImpl
             'order_year' => Carbon::now()->format('Y'),
             'status' => $status,
             'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
     }
 }

@@ -153,6 +153,7 @@ class ProductController extends Controller
             'digital_file' => $digitalItem,
             'status' => 1,
             'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
 
         ]);
 
@@ -251,7 +252,7 @@ class ProductController extends Controller
             'special_offer' => $request->special_offer,
             'special_deals' => $request->special_deals,
             'status' => 1,
-            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
 
         ]);
 

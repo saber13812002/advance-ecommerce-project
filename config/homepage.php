@@ -16,26 +16,19 @@ return [
     ],
     [
         'style_type' => 'product_category',
-        'category_id' => 1,
-        'product_ids' => [1, 2],
+        'category_id' => 7,
+        'product_ids' => [1, 2, 3],
         'action_type' => 'deep_link',
-        'action' => 'shop/category/1'
+        'action' => 'shop/category/7'
     ],
     [
         'style_type' => 'banner',
         'key' => 'id',
         'value' => 2,
         'title' => 'رژیم دکتر کرمانی',
-        'action_type' => 'link',
-        'action' => 'https://kermany.com/bmi/',
+        'action_type' => '',
+        'action' => '',
         'target' => '_blank'
-    ],
-    [
-        'style_type' => 'product_category',
-        'category_id' => 3,
-        'product_ids' => [3, 4],
-        'action_type' => 'deep_link',
-        'action' => 'shop/category/3'
     ],
     [
         'style_type' => 'banner',
@@ -45,13 +38,6 @@ return [
         'action_type' => 'deep_link',
         'action' => 'psy/intro',
         'target' => '_blank'
-    ],
-    [
-        'style_type' => 'product_category',
-        'category_id' => 2,
-        'product_ids' => [1, 3],
-        'action_type' => 'deep_link',
-        'action' => 'shop/category/2'
     ],
     [
         'style_type' => 'banner',
