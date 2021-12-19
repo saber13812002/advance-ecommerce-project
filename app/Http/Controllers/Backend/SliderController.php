@@ -59,7 +59,7 @@ class SliderController extends Controller
         $image = $request->file('slider_img');
         $name_gen = date('Y-m-d-H-i-s') . hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
         // TODO move size to Helper or config
-        Image::make($image)->resize(560, 360)->save(public_path('/upload/slider/') . $name_gen);
+        Image::make($image)->resize(670, 240)->save(public_path('/upload/slider/') . $name_gen);
         $save_url = 'storage/upload/slider/' . $name_gen;
 
         Slider::insert([
@@ -104,7 +104,7 @@ class SliderController extends Controller
             $image = $request->file('slider_img');
             $name_gen = date('Y-m-d-H-i-s') . hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
             // TODO move size to Helper or config 870, 370
-            Image::make($image)->resize(560, 360)->save(public_path('/upload/slider/') . $name_gen);
+            Image::make($image)->resize(670, 240)->save(public_path('/upload/slider/') . $name_gen);
             $save_url = 'storage/upload/slider/' . $name_gen;
 
             Slider::findOrFail($slider_id)->update([
