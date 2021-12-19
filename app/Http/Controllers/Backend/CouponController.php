@@ -119,6 +119,7 @@ class CouponController extends Controller
             'expired_at' => $request->expired_at,
             'coupon_validity' => $request->coupon_validity,
             'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
 
         ]);
 

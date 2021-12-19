@@ -32,6 +32,7 @@ class ReviewController extends Controller
             'summary' => $request->summary,
             'rating' => $request->quality,
             'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
 
         ]);
 
