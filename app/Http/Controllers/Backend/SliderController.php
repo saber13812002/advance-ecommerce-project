@@ -111,6 +111,11 @@ class SliderController extends Controller
                 'title' => $request->title,
                 'description' => $request->description,
                 'slider_img' => $save_url,
+                'group_id' => $request->group_id,
+                'model_id' => $request->model_id,
+                'model_name' => $request->model_name,
+                'action_type' => $request->action_type,
+                'action' => $request->action,
 
             ]);
 
@@ -124,6 +129,11 @@ class SliderController extends Controller
             Slider::findOrFail($slider_id)->update([
                 'title' => $request->title,
                 'description' => $request->description,
+                'group_id' => $request->group_id,
+                'model_id' => $request->model_id,
+                'model_name' => $request->model_name,
+                'action_type' => $request->action_type,
+                'action' => $request->action,
 
 
             ]);
