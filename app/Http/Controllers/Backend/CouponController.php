@@ -7,7 +7,7 @@ use App\Http\Requests\CouponRequest;
 use App\Http\Resources\CouponResourceCollection;
 use App\Interfaces\Repositories\CouponRepository;
 use App\Models\Coupon;
-use Behamin\BResources\Resources\BasicResource;
+use App\Services\CouponService;
 use BFilters\Filter;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -83,8 +83,7 @@ class CouponController extends Controller
             return app()->make(CouponRepository::class)
                 ->show($request, $couponName);
         } catch (\Exception $ex) {
-            $data["error"]["message"] = "کوپن پیدا نشد";
-            return BasicResource::make($data);
+            return CouponService::couponError("کوپن اعمال نشد و نا معتبر است");
         }
     }
 
