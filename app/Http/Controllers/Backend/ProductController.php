@@ -157,14 +157,15 @@ class ProductController extends Controller
         ]);
 
 
-        Image::make($image)->resize(917, 1000)->save(public_path('/upload/products/thambnail/') . $name_gen);
+        Image::make($image)->resize(430, 246)->save(public_path('/upload/products/thambnail/') . $name_gen);
 
         ////////// Multiple Image Upload Start ///////////
 
         $images = $request->file('multi_img');
         foreach ($images as $img) {
             $make_name = date('Y-m-d-H-i-s') . hexdec(uniqid()) . '.' . $img->getClientOriginalExtension();
-            Image::make($img)->resize(917, 1000)->save(public_path('/upload/products/multi-image/') . $make_name);
+            // TODO move size to Helper or config
+            Image::make($img)->resize(430, 246)->save(public_path('/upload/products/multi-image/') . $make_name);
             $uploadPath = 'storage/upload/products/multi-image/' . $make_name;
 
             MultiImg::insert([
@@ -276,7 +277,8 @@ class ProductController extends Controller
             }
 
             $make_name = date('Y-m-d-H-i-s') . hexdec(uniqid()) . '.' . $img->getClientOriginalExtension();
-            Image::make($img)->resize(917, 1000)->save('storage/upload/products/multi-image/' . $make_name);
+            // TODO move size to Helper or config 917, 1000
+            Image::make($img)->resize(430, 246)->save('storage/upload/products/multi-image/' . $make_name);
             $uploadPath = 'storage/upload/products/multi-image/' . $make_name;
 
             MultiImg::where('id', $id)->update([
@@ -307,7 +309,7 @@ class ProductController extends Controller
 
         $image = $request->file('product_thambnail');
         $name_gen = date('Y-m-d-H-i-s') . hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
-        Image::make($image)->resize(917, 1000)->save('storage/upload/products/thambnail/' . $name_gen);
+        Image::make($image)->resize(430, 246)->save('storage/upload/products/thambnail/' . $name_gen);
         $save_url = 'storage/upload/products/thambnail/' . $name_gen;
 
         Product::findOrFail($pro_id)->update([
