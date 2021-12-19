@@ -106,7 +106,8 @@ class CategoryController extends Controller
         }
         $savePath = public_path('/upload/category/');
         $name_gen = date('Y-m-d-H-i-s') . hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
-        Image::make($image)->resize(870, 370)->save($savePath . $name_gen);
+        // TODO move size to Helper or config
+        Image::make($image)->resize(750, 180)->save($savePath . $name_gen);
         $save_url = $path . $name_gen;
 
         Category::insert([
@@ -156,7 +157,8 @@ class CategoryController extends Controller
             }
             $savePath = public_path('/upload/category/');
             $name_gen = date('Y-m-d-H-i-s') . hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
-            Image::make($image)->resize(870, 370)->save($savePath . $name_gen);
+            // TODO move size to Helper or config 870, 370
+            Image::make($image)->resize(750, 180)->save($savePath . $name_gen);
             $save_url = $path . $name_gen;
 
             Category::findOrFail($id)->update([
