@@ -5,10 +5,11 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Http\Filters\SliderFilter;
 use App\Http\Resources\SliderResourceCollection;
+use App\Http\Services\ImageService;
 use App\Models\Slider;
+use File;
 use Illuminate\Http\Request;
 use Image;
-use File;
 
 class SliderController extends Controller
 {
@@ -63,10 +64,13 @@ class SliderController extends Controller
             File::makeDirectory($path);
         }
 
+        $imageType = $request->group_id ? 'slider' : 'banner';
+        [$height, $weight] = ImageService::getSize($imageType);
+
         $image = $request->file('slider_img');
         $name_gen = date('Y-m-d-H-i-s') . hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
         // TODO move size to Helper or config
-        Image::make($image)->resize(560, 360)->save(public_path('/upload/slider/') . $name_gen);
+        Image::make($image)->resize($height, $weight)->save(public_path('/upload/slider/') . $name_gen);
         $save_url = '/' . $path . $name_gen;
 
         Slider::insert([
@@ -115,10 +119,13 @@ class SliderController extends Controller
                 File::makeDirectory($path);
             }
 
+            $imageType = $request->group_id ? 'slider' : 'banner';
+            [$height, $weight] = ImageService::getSize($imageType);
+
             $image = $request->file('slider_img');
             $name_gen = date('Y-m-d-H-i-s') . hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
             // TODO move size to Helper or config 870, 370
-            Image::make($image)->resize(560, 360)->save(public_path('/upload/slider/') . $name_gen);
+            Image::make($image)->resize($height, $weight)->save(public_path('/upload/slider/') . $name_gen);
             $save_url = '/' . $path . $name_gen;
 
             Slider::findOrFail($slider_id)->update([
