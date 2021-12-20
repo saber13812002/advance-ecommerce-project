@@ -28,7 +28,7 @@ class SiteSettingController extends Controller
         if ($request->file('logo')) {
 
 
-            $path = 'storage/upload/logo/';
+            $path = '/storage/upload/logo/';
 
             if (!File::exists($path)) {
                 File::makeDirectory($path);

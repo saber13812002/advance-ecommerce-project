@@ -37,7 +37,7 @@ class AdminsTableSeeder extends Seeder
                 'password' => '$2y$10$ImjoHE8fN3QUrfWbRtCiauvZV1nz0DJj3daDkZJ8cJOxHpAMTGWTG',
                 'phone' => '1',
                 'product' => 1,
-                'profile_photo_path' => 'storage/upload/admin_images/1708281163402686.jpg',
+                'profile_photo_path' => '/storage/upload/admin_images/1708281163402686.jpg',
                 'remember_token' => '1XqHClt3b8QWlbD2dl1goV72KPQZEeeTnNEC1wzYFr0jUgoiOuxJ8Rr5M7Db',
                 'reports' => 1,
                 'returnorder' => 1,

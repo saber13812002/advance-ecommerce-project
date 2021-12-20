@@ -100,7 +100,8 @@ class CategoryController extends Controller
         ]);
         $image = $request->file('image');
 
-        $path = 'storage/upload/category/';
+        $path = '/storage/upload/category/';
+
         if (!File::exists($path)) {
             File::makeDirectory($path);
         }
@@ -150,7 +151,7 @@ class CategoryController extends Controller
             $image = $request->file('image');
 
 
-            $path = 'storage/upload/category/';
+            $path = '/storage/upload/category/';
 
             if (!File::exists($path)) {
                 File::makeDirectory($path);

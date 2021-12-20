@@ -108,7 +108,7 @@ class ProductController extends Controller
             $files->move($destinationPath, $digitalItem);
         }
 
-        $path = 'storage/upload/products/thambnail/';
+        $path = '/storage/upload/products/thambnail/';
 
         if (!File::exists($path)) {
             File::makeDirectory($path);
@@ -162,7 +162,7 @@ class ProductController extends Controller
 
         ]);
 
-        $path = 'storage/upload/products/thambnail/';
+        $path = '/storage/upload/products/thambnail/';
 
         if (!File::exists($path)) {
             File::makeDirectory($path);
@@ -172,12 +172,19 @@ class ProductController extends Controller
 
         ////////// Multiple Image Upload Start ///////////
 
+        $path = '/storage/upload/products/multi-image/';
+
+        if (!File::exists($path)) {
+            File::makeDirectory($path);
+        }
+
         $images = $request->file('multi_img');
+
         foreach ($images as $img) {
             $make_name = date('Y-m-d-H-i-s') . hexdec(uniqid()) . '.' . $img->getClientOriginalExtension();
             // TODO move size to Helper or config
             Image::make($img)->resize(430, 246)->save(public_path('/upload/products/multi-image/') . $make_name);
-            $uploadPath = 'storage/upload/products/multi-image/' . $make_name;
+            $uploadPath = $path . $make_name;
 
             MultiImg::insert([
 
@@ -280,6 +287,12 @@ class ProductController extends Controller
     {
         $imgs = $request->multi_img;
 
+        $path = '/storage/upload/products/multi-image/';
+
+        if (!File::exists($path)) {
+            File::makeDirectory($path);
+        }
+
         foreach ($imgs as $id => $img) {
             $imgDel = MultiImg::findOrFail($id);
 
@@ -290,7 +303,7 @@ class ProductController extends Controller
             $make_name = date('Y-m-d-H-i-s') . hexdec(uniqid()) . '.' . $img->getClientOriginalExtension();
             // TODO move size to Helper or config 917, 1000
             Image::make($img)->resize(430, 246)->save(public_path('/upload/products/multi-image/') . $make_name);
-            $uploadPath = 'storage/upload/products/multi-image/' . $make_name;
+            $uploadPath = $path . $make_name;
 
             MultiImg::where('id', $id)->update([
                 'photo_name' => $uploadPath,
@@ -318,10 +331,16 @@ class ProductController extends Controller
             unlink($oldImage);
         }
 
+        $path = '/storage/upload/products/thambnail/';
+
+        if (!File::exists($path)) {
+            File::makeDirectory($path);
+        }
+
         $image = $request->file('product_thambnail');
         $name_gen = date('Y-m-d-H-i-s') . hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
         Image::make($image)->resize(430, 246)->save(public_path('/upload/products/thambnail/') . $name_gen);
-        $save_url = 'storage/upload/products/thambnail/' . $name_gen;
+        $save_url = $path . $name_gen;
 
         Product::findOrFail($pro_id)->update([
             'product_thambnail' => $save_url,

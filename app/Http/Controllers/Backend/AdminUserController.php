@@ -32,7 +32,7 @@ class AdminUserController extends Controller
     {
 
 
-        $path = 'storage/upload/admin_images/';
+        $path = '/storage/upload/admin_images/';
 
         if (!File::exists($path)) {
             File::makeDirectory($path);
@@ -105,7 +105,7 @@ class AdminUserController extends Controller
             }
 
 
-            $path = 'storage/upload/admin_images/';
+            $path = '/storage/upload/admin_images/';
 
             if (!File::exists($path)) {
                 File::makeDirectory($path);

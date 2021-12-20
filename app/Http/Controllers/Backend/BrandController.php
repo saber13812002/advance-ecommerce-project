@@ -98,7 +98,7 @@ class BrandController extends Controller
             'brand_name_hin.required' => 'Input Brand Hindi Name',
         ]);
 
-        $path = 'storage/upload/brand/';
+        $path = '/storage/upload/brand/';
 
         if (!File::exists($path)) {
             File::makeDirectory($path);
@@ -148,7 +148,7 @@ class BrandController extends Controller
                 unlink($old_img);
             }
 
-            $path = 'storage/upload/brand/';
+            $path = '/storage/upload/brand/';
 
             if (!File::exists($path)) {
                 File::makeDirectory($path);
