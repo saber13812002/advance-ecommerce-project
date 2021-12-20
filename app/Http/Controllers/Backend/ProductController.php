@@ -111,10 +111,6 @@ class ProductController extends Controller
 
         $path = 'storage/upload/products/thambnail/';
 
-        if (!File::exists($path)) {
-            File::makeDirectory($path);
-        }
-
         $image = $request->file('product_thambnail');
         $name_gen = date('Y-m-d-H-i-s') . hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
         $save_url = '/' . $path . $name_gen;
@@ -168,10 +164,6 @@ class ProductController extends Controller
         ////////// Multiple Image Upload Start ///////////
 
         $path = 'storage/upload/products/multi-image/';
-
-        if (!File::exists($path)) {
-            File::makeDirectory($path);
-        }
 
         $images = $request->file('multi_img');
 
@@ -284,10 +276,6 @@ class ProductController extends Controller
 
         $path = 'storage/upload/products/multi-image/';
 
-        if (!File::exists($path)) {
-            File::makeDirectory($path);
-        }
-
         foreach ($imgs as $id => $img) {
             $imgDel = MultiImg::findOrFail($id);
 
@@ -327,10 +315,6 @@ class ProductController extends Controller
         }
 
         $path = 'storage/upload/products/thambnail/';
-
-        if (!File::exists($path)) {
-            File::makeDirectory($path);
-        }
 
         $image = $request->file('product_thambnail');
         $name_gen = date('Y-m-d-H-i-s') . hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
