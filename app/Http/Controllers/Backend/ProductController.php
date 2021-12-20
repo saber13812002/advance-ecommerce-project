@@ -15,6 +15,7 @@ use App\Models\SubSubCategory;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Image;
+use File;
 
 class ProductController extends Controller
 {

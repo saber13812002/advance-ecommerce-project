@@ -8,6 +8,7 @@ use App\Http\Resources\SliderResourceCollection;
 use App\Models\Slider;
 use Illuminate\Http\Request;
 use Image;
+use File;
 
 class SliderController extends Controller
 {
