@@ -22,7 +22,15 @@ class CouponRepositoryImpl implements CouponRepository
             abort("404", "کوپن اعمال نشد و نا معتبر است");
         }
 
-        $entry = Coupon::query()->whereCouponName($couponName)->firstOrFail();
+        $modelId = $request->product_id;
+        $modelName = "App/Product";
+
+        $entry = Coupon::query()
+            ->whereModelId($modelId)
+            ->whereModelName($modelName)
+            ->whereCouponName($couponName)
+            ->firstOrFail();
+
         $entry->product_id = request()->product_id;
         return response(new CouponResource(['data' => $entry], true));
     }

@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use File;
-use Illuminate\Http\Request;
 use App\Models\Admin;
 use Carbon\Carbon;
-use Auth;
+use File;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Image;
 
@@ -42,7 +41,7 @@ class AdminUserController extends Controller
         $image = $request->file('profile_photo_path');
         $name_gen = date('Y-m-d-H-i-s') . hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
         Image::make($image)->resize(225, 225)->save($path . $name_gen);
-        $save_url = $path . $name_gen;
+        $save_url = '/' . $path . $name_gen;
 
         Admin::insert([
             'name' => $request->name,
@@ -69,6 +68,7 @@ class AdminUserController extends Controller
             'type' => 2,
             'profile_photo_path' => $save_url,
             'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
 
 
         ]);
@@ -114,7 +114,7 @@ class AdminUserController extends Controller
             $image = $request->file('profile_photo_path');
             $name_gen = date('Y-m-d-H-i-s') . hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
             Image::make($image)->resize(225, 225)->save($path . $name_gen);
-            $save_url = $path . $name_gen;
+            $save_url = '/' . $path . $name_gen;
 
             Admin::findOrFail($admin_id)->update([
                 'name' => $request->name,

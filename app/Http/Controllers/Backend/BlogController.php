@@ -40,6 +40,7 @@ class BlogController extends Controller
         $entries = $entries->get();
         return response(new BlogPostResourceCollection(['data' => $entries, 'count' => $count]));
     }
+
     /**
      * @OA\Get(path="/api/blog-posts/{blogPostId}",
      *   tags={"BlogPosts"},
@@ -77,137 +78,137 @@ class BlogController extends Controller
         return response(new BlogPostResource(['data' => $entry]));
     }
 
-    public function BlogCategory(){
-    	$blogcategory = BlogPostCategory::latest()->get();
-    	return view('backend.blog.category.category_view',compact('blogcategory'));
+    public function BlogCategory()
+    {
+        $blogcategory = BlogPostCategory::latest()->get();
+        return view('backend.blog.category.category_view', compact('blogcategory'));
     }
 
 
-  public function BlogCategoryStore(Request $request){
+    public function BlogCategoryStore(Request $request)
+    {
 
-       $request->validate([
-    		'blog_category_name_en' => 'required',
-    		'blog_category_name_hin' => 'required',
+        $request->validate([
+            'blog_category_name_en' => 'required',
+            'blog_category_name_hin' => 'required',
 
-    	],[
-    		'blog_category_name_en.required' => 'Input Blog Category English Name',
-    		'blog_category_name_hin.required' => 'Input Blog Category Hindi Name',
-    	]);
-
-
-
-	BlogPostCategory::insert([
-		'blog_category_name_en' => $request->blog_category_name_en,
-		'blog_category_name_hin' => $request->blog_category_name_hin,
-		'blog_category_slug_en' => strtolower(str_replace(' ', '-',$request->blog_category_name_en)),
-		'blog_category_slug_hin' => str_replace(' ', '-',$request->blog_category_name_hin),
-		'created_at' => Carbon::now(),
+        ], [
+            'blog_category_name_en.required' => 'Input Blog Category English Name',
+            'blog_category_name_hin.required' => 'Input Blog Category Hindi Name',
+        ]);
 
 
-    	]);
-
-	    $notification = array(
-			'message' => 'Blog Category Inserted Successfully',
-			'alert-type' => 'success'
-		);
-
-		return redirect()->back()->with($notification);
-
-    }
+        BlogPostCategory::insert([
+            'blog_category_name_en' => $request->blog_category_name_en,
+            'blog_category_name_hin' => $request->blog_category_name_hin,
+            'blog_category_slug_en' => strtolower(str_replace(' ', '-', $request->blog_category_name_en)),
+            'blog_category_slug_hin' => str_replace(' ', '-', $request->blog_category_name_hin),
+            'created_at' => Carbon::now(),
 
 
+        ]);
 
-    public function BlogCategoryEdit($id){
+        $notification = array(
+            'message' => 'Blog Category Inserted Successfully',
+            'alert-type' => 'success'
+        );
 
-   $blogcategory = BlogPostCategory::findOrFail($id);
-    	return view('backend.blog.category.category_edit',compact('blogcategory'));
-    }
-
-
-
-
-public function BlogCategoryUpdate(Request $request){
-
-       $blogcar_id = $request->id;
-
-
-	BlogPostCategory::findOrFail($blogcar_id)->update([
-		'blog_category_name_en' => $request->blog_category_name_en,
-		'blog_category_name_hin' => $request->blog_category_name_hin,
-		'blog_category_slug_en' => strtolower(str_replace(' ', '-',$request->blog_category_name_en)),
-		'blog_category_slug_hin' => str_replace(' ', '-',$request->blog_category_name_hin),
-		'created_at' => Carbon::now(),
-
-
-    	]);
-
-	    $notification = array(
-			'message' => 'Blog Category Updated Successfully',
-			'alert-type' => 'info'
-		);
-
-		return redirect()->route('blog.category')->with($notification);
+        return redirect()->back()->with($notification);
 
     }
 
 
+    public function BlogCategoryEdit($id)
+    {
+
+        $blogcategory = BlogPostCategory::findOrFail($id);
+        return view('backend.blog.category.category_edit', compact('blogcategory'));
+    }
 
 
-  ///////////////////////////// Blog Post ALL Methods //////////////////
+    public function BlogCategoryUpdate(Request $request)
+    {
 
-  public function ListBlogPost(){
-  	  $blogpost = BlogPost::with('category')->latest()->get();
-  	  return view('backend.blog.post.post_list',compact('blogpost'));
-  }
+        $blogcar_id = $request->id;
 
 
-  public function AddBlogPost(){
+        BlogPostCategory::findOrFail($blogcar_id)->update([
+            'blog_category_name_en' => $request->blog_category_name_en,
+            'blog_category_name_hin' => $request->blog_category_name_hin,
+            'blog_category_slug_en' => strtolower(str_replace(' ', '-', $request->blog_category_name_en)),
+            'blog_category_slug_hin' => str_replace(' ', '-', $request->blog_category_name_hin),
+            'created_at' => Carbon::now(),
 
-    $blogcategory = BlogPostCategory::latest()->get();
-  	$blogpost = BlogPost::latest()->get();
-  	return view('backend.blog.post.post_view',compact('blogpost','blogcategory'));
 
-  }
+        ]);
+
+        $notification = array(
+            'message' => 'Blog Category Updated Successfully',
+            'alert-type' => 'info'
+        );
+
+        return redirect()->route('blog.category')->with($notification);
+
+    }
 
 
-  public function BlogPostStore(Request $request){
+    ///////////////////////////// Blog Post ALL Methods //////////////////
 
-  	$request->validate([
-    		'post_title_en' => 'required',
-    		'post_title_hin' => 'required',
-    		'post_image' => 'required',
-    	],[
-    		'post_title_en.required' => 'Input Post Title English Name',
-    		'post_title_hin.required' => 'Input Post Title Hindi Name',
-    	]);
+    public function ListBlogPost()
+    {
+        $blogpost = BlogPost::with('category')->latest()->get();
+        return view('backend.blog.post.post_list', compact('blogpost'));
+    }
 
-    	$image = $request->file('post_image');
-    	$name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
-    	Image::make($image)->resize(780,433)->save('storage/upload/post/'.$name_gen);
-    	$save_url = 'storage/upload/post/'.$name_gen;
 
-	BlogPost::insert([
-		'category_id' => $request->category_id,
-		'post_title_en' => $request->post_title_en,
-		'post_title_hin' => $request->post_title_hin,
-		'post_slug_en' => strtolower(str_replace(' ', '-',$request->post_title_en)),
-		'post_slug_hin' => str_replace(' ', '-',$request->post_title_hin),
-		'post_image' => $save_url,
-		'post_details_en' => $request->post_details_en,
-		'post_details_hin' => $request->post_details_hin,
-		'created_at' => Carbon::now(),
+    public function AddBlogPost()
+    {
 
-    	]);
+        $blogcategory = BlogPostCategory::latest()->get();
+        $blogpost = BlogPost::latest()->get();
+        return view('backend.blog.post.post_view', compact('blogpost', 'blogcategory'));
 
-	    $notification = array(
-			'message' => 'Blog Post Inserted Successfully',
-			'alert-type' => 'success'
-		);
+    }
 
-		return redirect()->route('list.post')->with($notification);
 
-  }
+    public function BlogPostStore(Request $request)
+    {
 
+        $request->validate([
+            'post_title_en' => 'required',
+            'post_title_hin' => 'required',
+            'post_image' => 'required',
+        ], [
+            'post_title_en.required' => 'Input Post Title English Name',
+            'post_title_hin.required' => 'Input Post Title Hindi Name',
+        ]);
+
+        $image = $request->file('post_image');
+        $name_gen = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
+        Image::make($image)->resize(780, 433)->save(public_path('/upload/post/') . $name_gen);
+        $save_url = '/storage/upload/post/' . $name_gen;
+
+        BlogPost::insert([
+            'category_id' => $request->category_id,
+            'post_title_en' => $request->post_title_en,
+            'post_title_hin' => $request->post_title_hin,
+            'post_slug_en' => strtolower(str_replace(' ', '-', $request->post_title_en)),
+            'post_slug_hin' => str_replace(' ', '-', $request->post_title_hin),
+            'post_image' => $save_url,
+            'post_details_en' => $request->post_details_en,
+            'post_details_hin' => $request->post_details_hin,
+            'created_at' => Carbon::now(),
+
+        ]);
+
+        $notification = array(
+            'message' => 'Blog Post Inserted Successfully',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('list.post')->with($notification);
+
+    }
 
 
 }

@@ -79,15 +79,15 @@ class CashController extends Controller
     {
         return OrderItem::create([
             'order_id' => $order_id,
-            'product_id' => $cart->id??$cart->product_id,
-            'color' => $cart->options->color??"",
-            'size' => $cart->options->size??"",
+            'product_id' => $cart->id ?? $cart->product_id,
+            'color' => $cart->options->color ?? "",
+            'size' => $cart->options->size ?? "",
             'qty' => $cart->qty,
             'price' => $cart->price,
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
             'hashed_key' => (string)Str::uuid(),
             'hashed_expired_at' => Carbon::now()->addDays(1),
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
     }
 

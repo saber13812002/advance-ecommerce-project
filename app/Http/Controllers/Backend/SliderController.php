@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Http\Filters\SliderFilter;
 use App\Http\Resources\SliderResourceCollection;
+use App\Http\Services\ImageService;
 use App\Models\Slider;
+use File;
 use Illuminate\Http\Request;
 use Image;
 
@@ -56,10 +58,20 @@ class SliderController extends Controller
 
         ]);
 
+        $path = 'storage/upload/slider/';
+
+        if (!File::exists($path)) {
+            File::makeDirectory($path);
+        }
+
+        $imageType = $request->group_id ? 'slider' : 'banner';
+        [$height, $weight] = ImageService::getSize($imageType);
+
         $image = $request->file('slider_img');
         $name_gen = date('Y-m-d-H-i-s') . hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
-        Image::make($image)->resize(870, 370)->save(public_path('/upload/slider/') . $name_gen);
-        $save_url = 'storage/upload/slider/' . $name_gen;
+        // TODO move size to Helper or config
+        Image::make($image)->resize($height, $weight)->save(public_path('/upload/slider/') . $name_gen);
+        $save_url = '/' . $path . $name_gen;
 
         Slider::insert([
             'title' => $request->title,
@@ -100,16 +112,31 @@ class SliderController extends Controller
             if (file_exists($old_img)) {
                 unlink($old_img);
             }
+
+            $path = 'storage/upload/slider/';
+
+            if (!File::exists($path)) {
+                File::makeDirectory($path);
+            }
+
+            $imageType = $request->group_id ? 'slider' : 'banner';
+            [$height, $weight] = ImageService::getSize($imageType);
+
             $image = $request->file('slider_img');
             $name_gen = date('Y-m-d-H-i-s') . hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
-            Image::make($image)->resize(870, 370)->save(public_path('/upload/slider/') . $name_gen);
-            $save_url = 'storage/upload/slider/' . $name_gen;
+            // TODO move size to Helper or config 870, 370
+            Image::make($image)->resize($height, $weight)->save(public_path('/upload/slider/') . $name_gen);
+            $save_url = '/' . $path . $name_gen;
 
             Slider::findOrFail($slider_id)->update([
                 'title' => $request->title,
                 'description' => $request->description,
                 'slider_img' => $save_url,
-
+                'group_id' => $request->group_id,
+                'model_id' => $request->model_id,
+                'model_name' => $request->model_name,
+                'action_type' => $request->action_type,
+                'action' => $request->action,
             ]);
 
             $notification = array(
@@ -122,6 +149,11 @@ class SliderController extends Controller
             Slider::findOrFail($slider_id)->update([
                 'title' => $request->title,
                 'description' => $request->description,
+                'group_id' => $request->group_id,
+                'model_id' => $request->model_id,
+                'model_name' => $request->model_name,
+                'action_type' => $request->action_type,
+                'action' => $request->action,
 
 
             ]);
