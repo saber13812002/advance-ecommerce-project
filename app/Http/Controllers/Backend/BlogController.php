@@ -186,7 +186,7 @@ class BlogController extends Controller
         $image = $request->file('post_image');
         $name_gen = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
         Image::make($image)->resize(780, 433)->save(public_path('/upload/post/') . $name_gen);
-        $save_url = 'storage/upload/post/' . $name_gen;
+        $save_url = '/storage/upload/post/' . $name_gen;
 
         BlogPost::insert([
             'category_id' => $request->category_id,

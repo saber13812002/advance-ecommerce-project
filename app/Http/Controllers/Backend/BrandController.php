@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Filters\BrandFilter;
 use App\Http\Resources\BrandResource;
 use App\Http\Resources\BrandResourceCollection;
+use Carbon\Carbon;
 use File;
 use Illuminate\Http\Request;
 use App\Models\Brand;
@@ -107,7 +108,7 @@ class BrandController extends Controller
         $image = $request->file('brand_image');
         $name_gen = date('Y-m-d-H-i-s') . hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
         Image::make($image)->resize(300, 300)->save($path . $name_gen);
-        $save_url = $path . $name_gen;
+        $save_url = '/' . $path . $name_gen;
 
         Brand::insert([
             'brand_name_en' => $request->brand_name_en,
@@ -115,7 +116,8 @@ class BrandController extends Controller
             'brand_slug_en' => strtolower(str_replace(' ', '-', $request->brand_name_en)),
             'brand_slug_hin' => str_replace(' ', '-', $request->brand_name_hin),
             'brand_image' => $save_url,
-
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
 
         $notification = array(
@@ -157,7 +159,7 @@ class BrandController extends Controller
             $image = $request->file('brand_image');
             $name_gen = date('Y-m-d-H-i-s') . hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
             Image::make($image)->resize(300, 300)->save($path . $name_gen);
-            $save_url = $path . $name_gen;
+            $save_url = '/' . $path . $name_gen;
 
             Brand::findOrFail($brand_id)->update([
                 'brand_name_en' => $request->brand_name_en,

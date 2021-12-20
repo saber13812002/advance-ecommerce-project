@@ -23,8 +23,8 @@ class CouponResource extends BasicResource
         }
 
         if ($resource->model_name && $resource->model_id) {
-            $discount = $resource->coupon_discount;
-            $final_price = $product->discount_price - $resource->coupon_discount;
+            $discount = $resource->coupon_discount > $product->discount_price ? $product->discount_price : $resource->coupon_discount;
+            $final_price = $product->discount_price - $discount;
         }
 
         return [

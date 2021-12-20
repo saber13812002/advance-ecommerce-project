@@ -101,6 +101,7 @@ class CategoryController extends Controller
         $image = $request->file('image');
 
         $path = 'storage/upload/category/';
+
         if (!File::exists($path)) {
             File::makeDirectory($path);
         }
@@ -108,7 +109,7 @@ class CategoryController extends Controller
         $name_gen = date('Y-m-d-H-i-s') . hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
         // TODO move size to Helper or config
         Image::make($image)->resize(750, 180)->save($savePath . $name_gen);
-        $save_url = $path . $name_gen;
+        $save_url = '/' . $path . $name_gen;
 
         Category::insert([
             'category_name_en' => $request->category_name_en,
@@ -149,7 +150,6 @@ class CategoryController extends Controller
             }
             $image = $request->file('image');
 
-
             $path = 'storage/upload/category/';
 
             if (!File::exists($path)) {
@@ -159,7 +159,7 @@ class CategoryController extends Controller
             $name_gen = date('Y-m-d-H-i-s') . hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
             // TODO move size to Helper or config 870, 370
             Image::make($image)->resize(750, 180)->save($savePath . $name_gen);
-            $save_url = $path . $name_gen;
+            $save_url = '/' . $path . $name_gen;
 
             Category::findOrFail($id)->update([
                 'category_name_en' => $request->category_name_en,

@@ -11,7 +11,6 @@ class Brand extends Model
     use HasFactory;
     use HasFilter;
 
-
     protected $fillable = [
         'brand_name_en',
         'brand_name_hin',
