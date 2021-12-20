@@ -57,7 +57,7 @@ class SliderController extends Controller
 
         ]);
 
-        $path = '/storage/upload/slider/';
+        $path = 'storage/upload/slider/';
 
         if (!File::exists($path)) {
             File::makeDirectory($path);
@@ -67,7 +67,7 @@ class SliderController extends Controller
         $name_gen = date('Y-m-d-H-i-s') . hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
         // TODO move size to Helper or config
         Image::make($image)->resize(560, 360)->save(public_path('/upload/slider/') . $name_gen);
-        $save_url = $path . $name_gen;
+        $save_url = '/' . $path . $name_gen;
 
         Slider::insert([
             'title' => $request->title,
@@ -109,7 +109,7 @@ class SliderController extends Controller
                 unlink($old_img);
             }
 
-            $path = '/storage/upload/slider/';
+            $path = 'storage/upload/slider/';
 
             if (!File::exists($path)) {
                 File::makeDirectory($path);
@@ -119,7 +119,7 @@ class SliderController extends Controller
             $name_gen = date('Y-m-d-H-i-s') . hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
             // TODO move size to Helper or config 870, 370
             Image::make($image)->resize(560, 360)->save(public_path('/upload/slider/') . $name_gen);
-            $save_url = $path . $name_gen;
+            $save_url = '/' . $path . $name_gen;
 
             Slider::findOrFail($slider_id)->update([
                 'title' => $request->title,

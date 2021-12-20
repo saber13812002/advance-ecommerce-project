@@ -28,7 +28,7 @@ class SiteSettingController extends Controller
         if ($request->file('logo')) {
 
 
-            $path = '/storage/upload/logo/';
+            $path = 'storage/upload/logo/';
 
             if (!File::exists($path)) {
                 File::makeDirectory($path);
@@ -37,7 +37,7 @@ class SiteSettingController extends Controller
             $image = $request->file('logo');
             $name_gen = date('Y-m-d-H-i-s') . hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
             Image::make($image)->resize(139, 36)->save($path . $name_gen);
-            $save_url = $path . $name_gen;
+            $save_url = '/' . $path . $name_gen;
 
             SiteSetting::findOrFail($setting_id)->update([
                 'phone_one' => $request->phone_one,

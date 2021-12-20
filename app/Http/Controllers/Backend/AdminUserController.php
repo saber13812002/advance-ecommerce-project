@@ -32,7 +32,7 @@ class AdminUserController extends Controller
     {
 
 
-        $path = '/storage/upload/admin_images/';
+        $path = 'storage/upload/admin_images/';
 
         if (!File::exists($path)) {
             File::makeDirectory($path);
@@ -41,7 +41,7 @@ class AdminUserController extends Controller
         $image = $request->file('profile_photo_path');
         $name_gen = date('Y-m-d-H-i-s') . hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
         Image::make($image)->resize(225, 225)->save($path . $name_gen);
-        $save_url = $path . $name_gen;
+        $save_url = '/' . $path . $name_gen;
 
         Admin::insert([
             'name' => $request->name,
@@ -105,7 +105,7 @@ class AdminUserController extends Controller
             }
 
 
-            $path = '/storage/upload/admin_images/';
+            $path = 'storage/upload/admin_images/';
 
             if (!File::exists($path)) {
                 File::makeDirectory($path);
@@ -114,7 +114,7 @@ class AdminUserController extends Controller
             $image = $request->file('profile_photo_path');
             $name_gen = date('Y-m-d-H-i-s') . hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
             Image::make($image)->resize(225, 225)->save($path . $name_gen);
-            $save_url = $path . $name_gen;
+            $save_url = '/' . $path . $name_gen;
 
             Admin::findOrFail($admin_id)->update([
                 'name' => $request->name,

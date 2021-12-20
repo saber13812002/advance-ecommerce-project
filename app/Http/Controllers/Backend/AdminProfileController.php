@@ -40,7 +40,7 @@ class AdminProfileController extends Controller
         $data->name = $request->name;
         $data->email = $request->email;
 
-        $path = '/storage/upload/admin_images/';
+        $path = 'storage/upload/admin_images/';
 
         if (!File::exists($path)) {
             File::makeDirectory($path);
