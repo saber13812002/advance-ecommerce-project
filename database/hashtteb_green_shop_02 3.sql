@@ -165,7 +165,7 @@ CREATE TABLE `coupons`  (
   `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
   `coupon_name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `coupon_discount` int NOT NULL,
-  `coupon_validity` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `started_at` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` int NOT NULL DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,

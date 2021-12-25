@@ -14,7 +14,7 @@ class AddFieldsToCouponsTable extends Migration
     public function up()
     {
         Schema::table('coupons', function (Blueprint $table) {
-            $table->string('model_name')->after('coupon_validity')->nullable();
+            $table->string('model_name')->after('started_at')->nullable();
             $table->string('model_id')->after('model_name')->nullable();
             $table->enum('coupon_discount_type', ['Percent', 'Toman', 'Dollar'])->after('model_id')->default("Percent")->nullable();
             $table->dateTime('expired_at')->nullable();
