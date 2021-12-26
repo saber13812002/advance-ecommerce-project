@@ -360,25 +360,15 @@ Route::group(['prefix' => 'user', 'middleware' => ['user', 'auth'], 'namespace' 
 
 // Wishlist page
     Route::get('/wishlist', [WishlistController::class, 'ViewWishlist'])->name('wishlist');
-
     Route::get('/get-wishlist-product', [WishlistController::class, 'GetWishlistProduct']);
-
     Route::get('/wishlist-remove/{id}', [WishlistController::class, 'RemoveWishlistProduct']);
-
     Route::post('/stripe/order', [StripeController::class, 'StripeOrder'])->name('stripe.order');
-
     Route::post('/cash/order', [CashController::class, 'CashOrder'])->name('cash.order');
-
     Route::get('/my/orders', [AllUserController::class, 'MyOrders'])->name('my.orders');
-
     Route::get('/order_details/{order_id}', [AllUserController::class, 'OrderDetails']);
-
     Route::get('/invoice_download/{order_id}', [AllUserController::class, 'InvoiceDownload']);
-
     Route::post('/return/order/{order_id}', [AllUserController::class, 'ReturnOrder'])->name('return.order');
-
     Route::get('/return/order/list', [AllUserController::class, 'ReturnOrderList'])->name('return.order.list');
-
     Route::get('/cancel/orders', [AllUserController::class, 'CancelOrders'])->name('cancel.orders');
 
 
@@ -390,41 +380,30 @@ Route::group(['prefix' => 'user', 'middleware' => ['user', 'auth'], 'namespace' 
 
 // My Cart Page All Routes
 Route::get('/mycart', [CartPageController::class, 'MyCart'])->name('mycart');
-
 Route::get('/user/get-cart-product', [CartPageController::class, 'GetCartProduct']);
-
 Route::get('/user/cart-remove/{rowId}', [CartPageController::class, 'RemoveCartProduct']);
-
 Route::get('/cart-increment/{rowId}', [CartPageController::class, 'CartIncrement']);
-
 Route::get('/cart-decrement/{rowId}', [CartPageController::class, 'CartDecrement']);
 
 
 // Frontend Coupon Option
 
 Route::post('/coupon-apply', [CartController::class, 'CouponApply']);
-
 Route::get('/coupon-calculation', [CartController::class, 'CouponCalculation']);
-
 Route::get('/coupon-remove', [CartController::class, 'CouponRemove']);
 
 // Checkout Routes
 
 Route::get('/checkout', [CartController::class, 'CheckoutCreate'])->name('checkout');
-
 Route::get('/district-get/ajax/{division_id}', [CheckoutController::class, 'DistrictGetAjax']);
-
 Route::get('/state-get/ajax/{district_id}', [CheckoutController::class, 'StateGetAjax']);
-
 Route::post('/checkout/store', [CheckoutController::class, 'CheckoutStore'])->name('checkout.store');
 
 
 //  Frontend Blog Show Routes
 
 Route::get('/blog', [HomeBlogController::class, 'AddBlogPost'])->name('home.blog');
-
 Route::get('/post/details/{id}', [HomeBlogController::class, 'DetailsBlogPost'])->name('post.details');
-
 Route::get('/blog/category/post/{category_id}', [HomeBlogController::class, 'HomeBlogCatPost']);
 
 /// Frontend Product Review Routes
