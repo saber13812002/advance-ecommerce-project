@@ -27,7 +27,7 @@ return [
     "Picked Orders" => "پیک شده",
     "Processing Orders" => "در حال پردازش",
     "Confirmed Orders" => "تایید شده",
-    "Pending Orders" => "معلق شده",
+    "Payed Orders" => "معلق شده",
     "User Interface" => "رابط کاربران",
     "Publish Review" => "نظرات منتشر شده",
     "Pending Review" => "نظرات معلق",
