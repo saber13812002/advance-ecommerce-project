@@ -3,13 +3,19 @@
 
 @php
 	$date = date('d-m-y');
-	$today = App\Models\Order::where('order_date',$date)->sum('amount');
+	$today = App\Models\Order::where('order_date',$date)
+	->payed()
+	->sum('amount');
 
 	$month = date('F');
-	$month = App\Models\Order::where('order_month',$month)->sum('amount');
+	$month = App\Models\Order::where('order_month',$month)
+	->payed()
+	->sum('amount');
 
     $year = date('Y');
-	$year = App\Models\Order::where('order_year',$year)->sum('amount');
+	$year = App\Models\Order::where('order_year',$year)
+	->payed()
+	->sum('amount');
 
     $pending = App\Models\Order::where('status','pending')->get();
 
