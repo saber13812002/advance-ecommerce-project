@@ -83,7 +83,7 @@ class CouponController extends Controller
             return app()->make(CouponRepository::class)
                 ->show($request, $couponName);
         } catch (\Exception $ex) {
-            return CouponService::couponError("کوپن اعمال نشد و نا معتبر است");
+            return CouponService::couponError($ex->getMessage());
         }
     }
 
@@ -91,22 +91,22 @@ class CouponController extends Controller
     {
         $coupons = Coupon::orderBy('id', 'DESC')->get();
         return view('backend.coupon.view_coupon', compact('coupons'));
-
     }
 
 
     public function CouponStore(Request $request)
     {
-
         $request->validate([
             'coupon_name' => 'required',
+
             'model_name' => 'required',
             'model_id' => 'required',
-            'coupon_discount_type' => 'required',
-            'expired_at' => 'required',
-            'coupon_discount' => 'required',
-            'coupon_validity' => 'required',
 
+            'coupon_discount_type' => 'required',
+            'coupon_discount' => 'required',
+
+            'started_at' => 'required',
+            'expired_at' => 'required',
         ]);
 
 
@@ -116,8 +116,13 @@ class CouponController extends Controller
             'model_name' => $request->model_name,
             'model_id' => $request->model_id,
             'coupon_discount_type' => $request->coupon_discount_type,
+
+            'started_at' => $request->started_at,
+            'message_before_started_at' => $request->message_before_started_at,
+
             'expired_at' => $request->expired_at,
-            'coupon_validity' => $request->coupon_validity,
+            'message_after_expired_at' => $request->message_after_expired_at,
+
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
 
@@ -147,8 +152,13 @@ class CouponController extends Controller
             'model_name' => $request->model_name,
             'model_id' => $request->model_id,
             'coupon_discount_type' => $request->coupon_discount_type,
+
+            'started_at' => $request->started_at,
+            'message_before_started_at' => $request->message_before_started_at,
+
             'expired_at' => $request->expired_at,
-            'coupon_validity' => $request->coupon_validity,
+            'message_after_expired_at' => $request->message_after_expired_at,
+
             'updated_at' => Carbon::now(),
         ]);
 
