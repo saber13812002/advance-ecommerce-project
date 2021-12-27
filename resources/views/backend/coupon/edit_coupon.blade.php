@@ -54,7 +54,8 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <h5>{{ trans("admin.coupon_discount_type")   }} <span class="text-danger">*</span></h5>
+                                        <h5>{{ trans("admin.coupon_discount_type")   }} <span
+                                                class="text-danger">*</span></h5>
                                         <div class="controls">
                                             <input type="text" name="coupon_discount_type" class="form-control"
                                                    value="{{ $coupons->coupon_discount_type }}">
@@ -91,7 +92,7 @@
                                         </h5>
                                         <div class="controls">
                                             <input type="date" name="started_at" class="form-control"
-                                                   min="{{ Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                   min="{{ Carbon\Carbon::now()->addDays(-1)->format('Y-m-d') }}"
                                                    value="{{ $coupons->started_at }}">
                                             @error('started_at')
                                             <span class="text-danger">{{ $message }}</span>
@@ -100,7 +101,8 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <h5>{{ trans("admin.message_before_started_at")   }} <span class="text-danger">*</span></h5>
+                                        <h5>{{ trans("admin.message_before_started_at")   }} <span
+                                                class="text-danger">*</span></h5>
                                         <div class="controls">
                                             <input type="text" name="message_before_started_at" class="form-control"
                                                    value="{{ $coupons->message_before_started_at }}">
@@ -116,7 +118,7 @@
                                         <div class="controls">
                                             <input type="date" name="expired_at" class="form-control"
                                                    min="{{ Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                   value="{{ $coupons->expired_at }}">
+                                                   value="{{ Carbon\Carbon::parse($coupons->expired_at)->format('Y-m-d') }}">
                                             @error('expired_at')
                                             <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -124,7 +126,8 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <h5>{{ trans("admin.message_after_expired_at")   }} <span class="text-danger">*</span></h5>
+                                        <h5>{{ trans("admin.message_after_expired_at")   }} <span
+                                                class="text-danger">*</span></h5>
                                         <div class="controls">
                                             <input type="text" name="message_after_expired_at" class="form-control"
                                                    value="{{ $coupons->message_after_expired_at }}">

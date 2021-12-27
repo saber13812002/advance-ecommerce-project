@@ -167,7 +167,7 @@
                                                 class="text-danger">*</span></h5>
                                         <div class="controls">
                                             <input type="date" name="started_at" class="form-control"
-                                                   min="{{ Carbon\Carbon::now()->format('Y-m-d') }}">
+                                                   min="{{ Carbon\Carbon::now()->addDays(-1)->format('Y-m-d') }}">
                                             @error('started_at')
                                             <span class="text-danger">{{ $message }}</span>
                                             @enderror

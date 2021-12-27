@@ -83,7 +83,7 @@ class CouponController extends Controller
             return app()->make(CouponRepository::class)
                 ->show($request, $couponName);
         } catch (\Exception $ex) {
-            return CouponService::couponError("کوپن اعمال نشد و نا معتبر است");
+            return CouponService::couponError($ex->getMessage());
         }
     }
 
