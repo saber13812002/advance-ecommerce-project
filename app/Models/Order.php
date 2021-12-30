@@ -38,5 +38,9 @@ class Order extends Model
         return $this->belongsTo(OrderItem::class, 'id', 'order_id');
     }
 
+    public function scopePayed($query)
+    {
+        return $query->whereStatus('payed');
+    }
 
 }
