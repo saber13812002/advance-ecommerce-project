@@ -85,7 +85,7 @@ class CouponController extends Controller
                 ->show($request, $couponName);
         } catch (\Exception $ex) {
             if ($ex instanceof ModelNotFoundException) {
-                return response()->json(['error' => trans("coupon.coupon_not_found")]);
+                return CouponService::couponError(trans("coupon.coupon_not_found"));
             }
             return CouponService::couponError($ex->getMessage());
         }
