@@ -10,6 +10,7 @@ use App\Models\Coupon;
 use App\Services\CouponService;
 use BFilters\Filter;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class CouponController extends Controller
@@ -83,6 +84,9 @@ class CouponController extends Controller
             return app()->make(CouponRepository::class)
                 ->show($request, $couponName);
         } catch (\Exception $ex) {
+            if ($ex instanceof ModelNotFoundException) {
+                return response()->json(['error' => trans("coupon.coupon_not_found")]);
+            }
             return CouponService::couponError($ex->getMessage());
         }
     }

@@ -4,7 +4,7 @@
 namespace App\Repositories;
 
 
-use App\Http\Resources\CouponResource;
+use App\Http\Resources\CustomCouponResource;
 use App\Interfaces\Repositories\CouponRepository;
 use App\Models\Coupon;
 use Carbon\Carbon;
@@ -20,7 +20,7 @@ class CouponRepositoryImpl implements CouponRepository
     public function show($request, $couponName)
     {
         if (!$request->product_id) {
-            abort("404", "کوپن اعمال نشد و نا معتبر است");
+            abort("404", trans("coupon.coupon_not_found"));
         }
 
         $modelId = $request->product_id;
@@ -34,7 +34,7 @@ class CouponRepositoryImpl implements CouponRepository
 
 
         if (!($entry->started_at && $entry->expired_at)) {
-            abort("404", "کوپن اعمال نشد و نا معتبر است");
+            abort("404", trans("coupon.coupon_not_found"));
         }
 
         $today = Carbon::now();
@@ -43,16 +43,15 @@ class CouponRepositoryImpl implements CouponRepository
 
         $result = $expired_at->lt($today);
         if ($result) {
-            abort("404", "کوپن منقضی شده است");
+            abort("404", trans("coupon.coupon_expired"));
         }
 
         $result = $today->lte($started_at);
         if ($result) {
-            abort("404", "کمپین شروع نشده است");
-        }
+            abort("404", trans("coupon.campaign_not_started"));   }
 
         $entry->product_id = request()->product_id;
-        return response(new CouponResource(['data' => $entry], true));
+        return response(new CustomCouponResource(['data' => $entry], true));
     }
 
 }
