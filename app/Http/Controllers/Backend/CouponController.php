@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Filters\CouponFilter;
 use App\Http\Requests\CouponRequest;
+use App\Http\Resources\CouponItemResource;
 use App\Http\Resources\CouponResourceCollection;
 use App\Interfaces\Repositories\CouponRepository;
 use App\Models\Coupon;
@@ -35,11 +37,51 @@ class CouponController extends Controller
      *   )
      * )
      */
-    public function index(Filter $filters)
+    public function index(CouponFilter $filters)
     {
         [$entries, $count, $sum] = Coupon::filter($filters);
         $entries = $entries->get();
         return response(new CouponResourceCollection(['data' => $entries, 'count' => $count], true));
+    }
+
+
+    /**
+     * @OA\Get (path="/api/coupons/{couponId}",
+     *   tags={"Coupons"},
+     *   summary="Returns coupon by id as json",
+     *   description="Return coupon by id",
+     *   operationId="getCouponsByid",
+     *
+     *  @OA\Parameter(
+     *       description="couponId",
+     *       name="couponId",
+     *       required=true,
+     *       in="path",
+     *       example="1",
+     *       @OA\Schema(
+     *           type="integer",
+     *           format="int64"
+     *       )
+     *   ),
+     *
+     *   @OA\Response(
+     *     response=200,
+     *     description="successful operation",
+     *     @OA\Schema(
+     *       additionalProperties={
+     *         "type":"integer",
+     *         "format":"int32"
+     *       }
+     *     )
+     *   )
+     * )
+     */
+    public function show(int $couponId)
+    {
+        $entry = app()->make(CouponRepository::class)
+            ->show($couponId);
+
+        return response(new CouponItemResource(['data' => $entry], true));
     }
 
 
@@ -78,11 +120,11 @@ class CouponController extends Controller
      *   )
      * )
      */
-    public function show(CouponRequest $request, string $couponName)
+    public function query(CouponRequest $request, string $couponName)
     {
         try {
             return app()->make(CouponRepository::class)
-                ->show($request, $couponName);
+                ->query($request, $couponName);
         } catch (\Exception $ex) {
             if ($ex instanceof ModelNotFoundException) {
                 return CouponService::couponError(trans("coupon.coupon_not_found"));

@@ -17,7 +17,13 @@ class CouponRepositoryImpl implements CouponRepository
         // TODO: Implement index() method.
     }
 
-    public function show($request, $couponName)
+    public function show(int $couponId)
+    {
+        return Coupon::query()
+            ->findOrFail($couponId);
+    }
+
+    public function query($request, $couponName)
     {
         if (!$request->product_id) {
             abort("404", trans("coupon.coupon_not_found"));
@@ -53,5 +59,4 @@ class CouponRepositoryImpl implements CouponRepository
         $entry->product_id = request()->product_id;
         return response(new CustomCouponResource(['data' => $entry], true));
     }
-
 }
