@@ -254,6 +254,22 @@ class OrderController extends Controller
      */
     public function setOrderWithOrderItem(OrderWithOrderItemRequest $request)
     {
+        $userId = $request->user_id;
+
+        // TODO remove duplicate like this and move them into Helper or Service
+        $orderItemExist = OrderItem::with('order')
+            ->whereHas('order', function ($query) use ($userId) {
+                $query->where('user_id', '=', $userId)
+                    ->where('status', 'payed');
+            })
+            ->where('product_id', $request->product_id)
+            ->orderBy('id', 'desc')
+            ->first();
+
+        if ($orderItemExist) {
+            return $orderItemExist;
+        }
+
         $data = [
             'division_id' => 1,
             'district_id' => 1,
