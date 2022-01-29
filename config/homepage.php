@@ -31,6 +31,13 @@ return [
         'target' => '_blank'
     ],
     [
+        'style_type' => 'product_category',
+        'category_id' => 7,
+        'product_ids' => [4, 5, 6],
+        'action_type' => 'deep_link',
+        'action' => 'shop/category/7'
+    ],
+    [
         'style_type' => 'banner',
         'key' => 'id',
         'value' => 4,
