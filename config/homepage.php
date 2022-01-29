@@ -32,10 +32,10 @@ return [
     ],
     [
         'style_type' => 'product_category',
-        'category_id' => 7,
+        'category_id' => 1,
         'product_ids' => [4, 5, 6],
         'action_type' => 'deep_link',
-        'action' => 'shop/category/7'
+        'action' => 'shop/category/1'
     ],
     [
         'style_type' => 'banner',
