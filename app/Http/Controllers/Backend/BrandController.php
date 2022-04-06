@@ -115,9 +115,7 @@ class BrandController extends Controller
             'brand_name_hin' => $request->brand_name_hin,
             'brand_slug_en' => strtolower(str_replace(' ', '-', $request->brand_name_en)),
             'brand_slug_hin' => str_replace(' ', '-', $request->brand_name_hin),
-            'brand_image' => $save_url,
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
+            'brand_image' => $save_url
         ]);
 
         $notification = array(

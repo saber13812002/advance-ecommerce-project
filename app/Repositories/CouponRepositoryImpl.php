@@ -54,7 +54,8 @@ class CouponRepositoryImpl implements CouponRepository
 
         $result = $today->lte($started_at);
         if ($result) {
-            abort("404", trans("coupon.campaign_not_started"));   }
+            abort("404", trans("coupon.campaign_not_started"));
+        }
 
         $entry->product_id = request()->product_id;
         return response(new CustomCouponResource(['data' => $entry], true));
